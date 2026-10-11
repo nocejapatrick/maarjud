@@ -7,6 +7,7 @@
 // Hair clip photos are public-domain (CC0) stand-ins from the WordPress Photo Directory, cropped to 2:3:
 // wordpress.org/photos/photo/ 36768b93fd, 5769d55084, 4996a15c6e, 109684baf5, 3546a1983d, 59969bd182, 63669bac40,
 // 8226a08012. They show crocheted flowers and bows rather than the shop's own clips: replace them too.
+// pexel-hair-clips.jpg (bunny and carrot clips) is a Pexels photo the shop owner added; it is a stand-in as well.
 
 export type Collection = {
   slug: 'scrunchies' | 'hair-clips';
@@ -99,6 +100,7 @@ export const products: Product[] = [
   { collection: 'scrunchies', slug: 'blue-and-white-pair', name: 'Blue and white pair', price: 340, color: 'Blue', rank: 14, date: '2026-03-30', inStock: true, image: '/images/tile-14.jpg' },
 
   // Hair clips: placeholder names and prices, named after what the stand-in photos show
+  { collection: 'hair-clips', slug: 'bunny-and-carrot-crochet-clip-set', name: 'Bunny and carrot crochet clip set', price: 320, color: 'Multi', rank: 9, date: '2026-10-11', inStock: true, image: '/images/pexel-hair-clips.jpg' },
   { collection: 'hair-clips', family: 'rose', slug: 'lilac-rose-crochet-clip', name: 'Lilac rose crochet clip', price: 140, color: 'Lilac', rank: 2, date: '2026-10-06', inStock: true, image: '/images/clip-01.jpg' },
   { collection: 'hair-clips', slug: 'gold-sunflower-crochet-clip', name: 'Gold sunflower crochet clip', price: 150, color: 'Gold', rank: 1, date: '2026-10-02', inStock: true, image: '/images/clip-02.jpg' },
   { collection: 'hair-clips', family: 'rose', slug: 'red-rose-crochet-clip', name: 'Red rose crochet clip', price: 140, color: 'Red', rank: 3, date: '2026-09-28', inStock: true, image: '/images/clip-03.jpg' },

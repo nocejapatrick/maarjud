@@ -10,6 +10,7 @@ This is a Next.js 16 site (App Router, TypeScript, Tailwind CSS 3). It was a sin
 - `components/` — shared pieces (header, footer, product card, filters and grid, bag). `components/product/` holds the product page parts.
 - `lib/products.ts` — **the product list and the collections. Add, remove or edit products here**; the collection pages, product pages and bag all read from it. Each product names its `collection`. Every collection page uses the same layout (`components/CollectionPage.tsx`): to add a collection, add it to `collections` in this file, add a page in `app/` that renders `<CollectionPage slug="..." />`, and add a link in `lib/site.ts`. The hair clips are placeholders until the real ones are supplied: made-up names and prices, with public-domain stand-in photos of crocheted flowers and bows (sources are listed at the top of `lib/products.ts`). `lib/colors.ts` holds fabric swatch colours, `lib/site.ts` holds navigation links and the Instagram username.
 - `public/images/` — product photos. `public/brand_assets/` — logos and icons.
+- `scripts/prepare_photos.py` — gets new product photos ready: crops to 2:3 portrait, resizes to 1600 x 2400, converts to sRGB JPG (HEIC included) and strips location data. Originals go in `new-photos/` (not in git); run `python3 scripts/prepare_photos.py` and the results land in `public/images/`. New photos should go through it rather than being copied in by hand.
 - Next.js 16 has breaking changes from earlier versions. Before using an API you are not sure of, read the matching guide in `node_modules/next/dist/docs/`.
 
 ## Ordering
@@ -49,8 +50,9 @@ This is a Next.js 16 site (App Router, TypeScript, Tailwind CSS 3). It was a sin
 - Next.js pages and React components (see Project Structure). Server components by default; add `'use client'` only to parts that need clicks, state or browser storage.
 - Tailwind CSS 3, compiled by Next.js (`tailwind.config.ts`, `postcss.config.mjs`). Do not use the Tailwind CDN script.
 - Component styles that are more than a few utilities go in `app/globals.css`, above `@tailwind utilities`.
-- Product photos use `next/image`. Placeholder images: `https://placehold.co/WIDTHxHEIGHT`, with a plain `<img>`.
+- Product photos go through `components/ProductImage.tsx`, never a bare `next/image` or `<img>`. It loads a photo only when it is on, or about 200px from, the screen and then fades it in; pass `eager` only for photos that are on screen when the page opens, and `first` for the single biggest photo on screen at page open (one per page: it is fetched ahead of everything else, which is what the phone speed score depends on). It uses `next/image` for files in `public/images` and a plain `<img>` for placeholder images (`https://placehold.co/WIDTHxHEIGHT`).
 - Links between pages use `next/link`.
+- Rubik is loaded from `app/fonts/rubik-latin.woff2` with `next/font/local`, not `next/font/google`: Google's version makes every page download an extra font file for the peso sign, which Rubik does not contain. ₱ is drawn by the system font.
 - Mobile-first responsive
 
 ## Brand Assets

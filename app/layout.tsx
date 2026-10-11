@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Baskervville, Rubik } from 'next/font/google';
+import { Baskervville } from 'next/font/google';
+import localFont from 'next/font/local';
 import { Analytics } from '@/components/Analytics';
 import { BagDrawer } from '@/components/BagDrawer';
 import { BagProvider } from '@/components/BagProvider';
@@ -9,11 +10,14 @@ import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import './globals.css';
 
-const rubik = Rubik({ subsets: ['latin', 'latin-ext'], weight: ['300', '400'], variable: '--font-rubik' });
+// Rubik (basic Latin, weights 300 to 400 in one file; from Google Fonts, SIL Open Font License).
+// It is a local file rather than next/font/google on purpose: Google's version also declares an extended character
+// set that claims the peso sign without containing it, so every page downloaded an extra 18 KB font for nothing.
+const rubik = localFont({ src: './fonts/rubik-latin.woff2', weight: '300 400', style: 'normal', display: 'swap', variable: '--font-rubik' });
 const baskervville = Baskervville({ subsets: ['latin'], weight: '400', style: 'italic', variable: '--font-baskervville' });
 
 // Rubik has no peso sign. next/font pairs every font with an Arial-based stand-in, which would draw ₱ heavier than
-// the text around it, so the page uses the bare Rubik name and lets ₱ fall through to the system font instead.
+// the text around it, so the page uses the bare font name and lets ₱ fall through to the system font instead.
 const bodyFont = rubik.style.fontFamily.split(',')[0];
 
 export const metadata: Metadata = {

@@ -24,12 +24,11 @@ export function Gallery({ product }: { product: Product }) {
   return (
     <div ref={gallery} id="p-gallery" className="pdp-gallery" role="region" aria-label="Product photos">
       <figure className="pdp-photo">
-        <ProductImage src={product.image} alt={product.name} sizes="(min-width: 750px) 50vw, 90vw" eager />
+        <ProductImage src={product.image} alt={product.name} sizes="(min-width: 750px) 50vw, 90vw" first />
       </figure>
       {[2, 3].map((number) => (
         <figure key={number} className="pdp-photo">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`https://placehold.co/850x1275/e8d6c9/6b4f5c?text=Photo+${number}`} alt="" width={850} height={1275} loading="lazy" />
+          <ProductImage src={`https://placehold.co/850x1275/e8d6c9/6b4f5c?text=Photo+${number}`} alt="" sizes="(min-width: 750px) 50vw, 90vw" />
         </figure>
       ))}
     </div>

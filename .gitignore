@@ -9,3 +9,6 @@ temporary screenshots/
 .env
 .env.*
 !.env.example
+
+# original photos waiting for scripts/prepare_photos.py (large, and they carry location data)
+new-photos/

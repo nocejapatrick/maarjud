@@ -268,7 +268,7 @@ export function CollectionView({ products }: { products: Product[] }) {
         <ul id="grid" className={`grid min-w-0 flex-1 grid-cols-2 gap-px min-[750px]:grid-cols-4${isResizing ? ' is-resizing' : ''}`}>
           {sorted.map((product) => (
             <li key={product.slug} data-slug={product.slug} hidden={!matches(product)}>
-              <ProductCard product={product} sizes="(min-width: 750px) 25vw, 50vw" eager={products.indexOf(product) < 4} />
+              <ProductCard product={product} sizes="(min-width: 750px) 25vw, 50vw" eager={products.indexOf(product) < 4} first={products.indexOf(product) === 0} />
             </li>
           ))}
         </ul>
