@@ -1,0 +1,11 @@
+node_modules
+.next
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+temporary screenshots/
+
+# environment files (secrets and per-machine settings); .env.example is kept so the names are documented
+.env
+.env.*
+!.env.example

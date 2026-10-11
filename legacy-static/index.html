@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scrunchies | Maarjud</title>
+    <meta name="description" content="Placeholder description for the scrunchies collection page." />
+    <link rel="icon" type="image/svg+xml" href="/brand_assets/maarjud-icon.svg" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/brand_assets/maarjud-icon-512.png" />
+    <link rel="apple-touch-icon" href="/brand_assets/maarjud-icon-512.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baskervville:ital@1&family=Rubik:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      // /product/name-of-product shows the product view; every other address shows the collection
+      document.documentElement.dataset.view = /^\/product\/[^/]+\/?$/.test(location.pathname) ? 'product' : 'collection';
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              surface: '#fbf4ec',
+              'surface-raised': '#fffaf5',
+              line: '#e8d6c9',
+              ink: '#2b1320',
+              'ink-muted': '#6b4f5c',
+              rouge: '#b3124f',
+              velvet: '#4a0f2b',
+              gold: '#d4a03c',
+              blush: '#f5cfd3',
+              jade: '#2e6f5c'
+            },
+            fontFamily: {
+              body: ['Rubik', 'system-ui', 'sans-serif'],
+              serif: ['Baskervville', 'Baskerville', 'Georgia', 'serif'],
+              promo: ['"Times New Roman"', 'Times', 'serif']
+            }
+          }
+        }
+      };
+    </script>
+
+    <style>
+      :root {
+        --surface: #fbf4ec;
+        --surface-raised: #fffaf5;
+        --line: #e8d6c9;
+        --ink: #2b1320;
+        --ink-muted: #6b4f5c;
+        --rouge: #b3124f;
+        --velvet: #4a0f2b;
+        --gold: #d4a03c;
+        --blush: #f5cfd3;
+        --jade: #2e6f5c;
+        --outer: 16px;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @media (min-width: 1024px) {
+        :root { --outer: 50px; }
+      }
+      @keyframes drawer-in {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(0); }
+      }
+      /* ---- Filters: one panel. A sidebar beside the grid on wide screens, a slide-in drawer below 1024px ---- */
+      .filters {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        max-width: none;
+        max-height: none;
+        background: var(--surface);
+        color: var(--ink);
+      }
+      .filters:not(:modal) {
+        position: static;
+        flex: none;
+        width: 274px;
+      }
+      .filters:modal {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: min(86vw, 326px);
+        height: 100vh;
+        height: 100dvh;
+        overflow-y: auto;
+        background: var(--surface-raised);
+      }
+      .filters:modal[open] { animation: drawer-in 0.45s var(--ease); }
+      /* velvet, written out: ::backdrop does not inherit custom properties in every browser */
+      .filters::backdrop { background: #4a0f2b; opacity: 0.6; }
+
+      .f-head { display: none; }
+      .filters:modal .f-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 66px;
+        padding: 0 13px 0 18px;
+      }
+      .f-body { padding: 0 14px 8px 54px; border-bottom: 1px solid var(--line); }
+      .filters:modal .f-body { padding: 0 18px 24px; border-bottom: 0; }
+
+      .f-sum {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 42px;
+        padding-top: 14px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+        font-weight: 400;
+        cursor: pointer;
+        list-style: none;
+      }
+      .f-sum::-webkit-details-marker { display: none; }
+      .f-sum:hover { color: var(--rouge); }
+      /* minus when open, plus when closed */
+      .f-pm { position: relative; width: 10px; height: 10px; }
+      .f-pm::before, .f-pm::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 4.5px;
+        width: 10px;
+        height: 1px;
+        background: currentColor;
+        transition: transform 0.3s var(--ease);
+      }
+      .f-pm::after { transform: rotate(90deg); }
+      details[open] > .f-sum .f-pm::after { transform: rotate(0deg); }
+
+      .f-list { padding-top: 6px; }
+      .filters:modal .f-list { padding-top: 7px; }
+      .filters:modal .f-list-tight { padding-bottom: 3px; }
+      .f-row {
+        display: flex;
+        align-items: center;
+        height: 30.4px;
+        font-size: 12px;
+        font-weight: 400;
+        cursor: pointer;
+      }
+      .f-row-tight { height: 26px; }
+      .filters:modal .f-row { height: 31.7px; }
+      .filters:modal .f-row-tight { height: 27px; }
+      .f-row:hover { color: var(--rouge); }
+      .f-row input {
+        appearance: none;
+        -webkit-appearance: none;
+        flex: none;
+        width: 14px;
+        height: 14px;
+        margin: 0 8px 0 0;
+        border: 1px solid var(--ink-muted);
+        background: transparent center / 10px 10px no-repeat;
+        cursor: pointer;
+        transition: transform 0.25s var(--spring);
+      }
+      .f-row:hover input { border-color: var(--rouge); }
+      .f-row input:active { transform: scale(0.85); }
+      .f-row input:checked {
+        border-color: var(--rouge);
+        background-color: var(--rouge);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23fbf4ec' stroke-width='1.6'%3E%3Cpath d='M1.5 5.2l2.4 2.4 4.6-5'/%3E%3C/svg%3E");
+      }
+      .f-row.is-off { color: var(--ink-muted); cursor: default; text-decoration: line-through; }
+      .f-row.is-off:hover { color: inherit; }
+      .f-row.is-off input { border-color: var(--line); background-color: var(--line); cursor: default; }
+      .f-swatch { flex: none; width: 18px; height: 18px; margin-right: 9px; }
+      .f-swatch.is-pale { box-shadow: inset 0 0 0 1px var(--ink-muted); }
+      .f-more {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        height: 40px;
+        padding-left: 3px;
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--rouge);
+      }
+      .filters:modal .f-more { height: 43px; }
+      .f-more:hover { color: var(--ink); }
+      .f-more:active { transform: translateY(1px); }
+
+      /* ---- Logo link ---- */
+      .logo img { transition: opacity 0.2s ease-out, transform 0.3s var(--spring); }
+      .logo:hover img { opacity: 0.75; }
+      .logo:active img { transform: scale(0.97); }
+
+      /* ---- Product name and price: under the photo on small screens, a band that slides up on hover on wide ones ---- */
+      .caption { display: block; padding: 12px 8px; text-align: center; }
+      .caption-name { display: block; font-size: 14px; line-height: 16.8px; }
+      .caption-price { display: block; margin-top: 4px; font-size: 13px; line-height: 15.6px; color: var(--ink-muted); }
+      @media (min-width: 1024px) {
+        .product { position: relative; overflow: hidden; }
+        .caption {
+          position: absolute;
+          inset: auto 0 0 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          height: 46px;
+          padding: 0 20px;
+          background: var(--surface);
+          text-align: left;
+        }
+        .caption-name, .caption-price { margin: 0; font-size: 12px; line-height: 16px; }
+        .caption-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .caption-price { flex: none; }
+      }
+      /* ---- Hover: a flat, low-opacity ink wash darkens the photo (ink is the palette's black) ---- */
+      .tile::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--ink);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease-out;
+      }
+      @media (hover: hover) {
+        .product:hover .tile::after,
+        .product:focus-visible .tile::after { opacity: 0.15; }
+      }
+
+      /* hidden until hover or keyboard focus; touch-first wide screens (no hover) keep it visible */
+      @media (min-width: 1024px) {
+        .caption { transform: translateY(100%); transition: transform 0.45s var(--ease); }
+        .product:hover .caption,
+        .product:focus-visible .caption { transform: translateY(0); }
+        /* while the window is being resized the band must not animate back into place */
+        .is-resizing .caption { transition: none; }
+      }
+      @media (min-width: 1024px) and (pointer: coarse) {
+        .caption { transform: none; }
+      }
+
+      /* ---- Sort by dropdown ---- */
+      @keyframes menu-in {
+        from { opacity: 0; transform: translateY(-6px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .sort-menu {
+        position: absolute;
+        top: calc(100% + 2px);
+        right: 0;
+        z-index: 20;
+        width: 195px;
+        padding: 12px 0;
+        background: var(--surface-raised);
+        font-size: 14px;
+        font-weight: 300;
+        text-transform: none;
+        letter-spacing: 0;
+        animation: menu-in 0.25s var(--ease);
+      }
+      .sort-menu[hidden] { display: none; }
+      .sort-menu button {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 32.5px;
+        padding: 0 15px;
+        text-align: left;
+        transition: transform 0.3s var(--spring);
+      }
+      .sort-menu button:hover { color: var(--rouge); transform: translateX(2px); }
+      .sort-menu button:active { transform: translateX(0); }
+      .sort-menu button[aria-checked='true'] { color: var(--rouge); font-weight: 400; }
+      .sort-menu button:focus-visible { outline-offset: -2px; }
+
+      /* ---------- Views: the collection and the product page share this file ---------- */
+      [data-view="product"] [data-page="collection"],
+      [data-view="collection"] [data-page="product"] { display: none !important; }
+
+      /* ---------- Product page ---------- */
+      .pdp-gallery {
+        display: flex;
+        gap: 2px;
+        margin: 0 -16px 10px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+      }
+      .pdp-gallery::-webkit-scrollbar { display: none; }
+      .pdp-gallery:focus-visible { outline-offset: -2px; }
+      .pdp-photo { flex: 0 0 calc(100% - 40px); aspect-ratio: 2 / 3; background: var(--surface-raised); scroll-snap-align: start; }
+      .pdp-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      @media (min-width: 750px) {
+        .pdp-gallery { flex-direction: column; gap: 15px; margin: 0 0 0 calc(var(--outer) * -1); overflow: visible; }
+        .pdp-photo { flex: none; }
+      }
+
+      .swatches { display: flex; }
+      .swatch { position: relative; display: block; width: 30px; height: 20px; transition: transform 0.3s var(--spring); }
+      .swatch.is-pale { box-shadow: inset 0 0 0 1px var(--ink-muted); }
+      .swatch::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 -6px 0;
+        height: 1px;
+        background: var(--ink);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.35s var(--ease);
+      }
+      .swatch[aria-current="page"]::after, .swatch:hover::after, .swatch:focus-visible::after { transform: scaleX(1); }
+      .swatch:active { transform: translateY(1px); }
+
+      button.btn-primary, button.btn-quiet {
+        display: block;
+        width: 100%;
+        padding: 8px 16px;
+        border: 1px solid var(--rouge);
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 17.875px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: transform 0.3s var(--spring), opacity 0.2s ease-out;
+      }
+      button.btn-primary { background: var(--rouge); color: var(--surface); }
+      button.btn-primary:hover { opacity: 0.86; }
+      button.btn-quiet { border-color: var(--ink-muted); background: transparent; color: var(--ink); }
+      button.btn-quiet:hover { border-color: var(--ink); background: var(--surface-raised); }
+      button.btn-primary:active, button.btn-quiet:active, button.btn-pill:active { transform: scale(0.98); }
+      @media (min-width: 1024px) {
+        button.btn-primary, button.btn-quiet { padding: 10px 18px; }
+      }
+      button.btn-pill {
+        width: 260px;
+        height: 50px;
+        border: 1px solid var(--ink-muted);
+        border-radius: 9999px;
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+        transition: transform 0.3s var(--spring);
+      }
+      button.btn-pill:hover { border-color: var(--ink); background: var(--surface-raised); }
+
+      button.tab {
+        position: relative;
+        padding: 0 0 5px;
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 15.5px;
+        letter-spacing: 1.3px;
+        color: var(--ink-muted);
+      }
+      button.tab::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.35s var(--ease);
+      }
+      button.tab:hover, button.tab[aria-selected="true"] { color: var(--ink); }
+      button.tab:hover::after, button.tab[aria-selected="true"]::after { transform: scaleX(1); }
+      button.tab:active { opacity: 0.7; }
+
+      .pdp-copy { padding: 18px 15px 15px 0; }
+      .pdp-copy p { margin: 7px 0; font-size: 14px; line-height: 16.5px; }
+      @media (min-width: 1024px) {
+        .pdp-copy p { margin: 8px 0; font-size: 16px; line-height: 19px; }
+      }
+
+      /* related / recently viewed row */
+      .rel-panel { position: relative; }
+      .rel-slider { display: flex; gap: 1px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; }
+      .rel-slider::-webkit-scrollbar { display: none; }
+      .rel-item { flex: 0 0 calc(100vw - 50px); scroll-snap-align: start; }
+      @media (min-width: 750px) {
+        .rel-item { flex-basis: calc((100vw - var(--outer)) * 0.2716); }
+      }
+      @media (min-width: 1024px) {
+        .rel-item .caption { position: static; display: block; height: auto; padding: 10px 20px; background: none; text-align: center; transform: none; transition: none; }
+        .rel-item .caption-name { font-size: 16px; line-height: 22.4px; white-space: normal; }
+        .rel-item .caption-price { margin-top: 4px; font-size: 14px; line-height: 19.6px; }
+      }
+      .rel-panel button.rel-nav {
+        position: absolute;
+        top: calc((100vw - var(--outer)) * 0.2716 * 0.75 - 20px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: var(--surface);
+        transition: transform 0.3s var(--spring), opacity 0.2s ease-out;
+      }
+      .rel-panel button.rel-prev { left: 10px; }
+      .rel-panel button.rel-next { right: 10px; }
+      .rel-panel button.rel-nav:hover { opacity: 0.8; transform: scale(1.06); }
+      .rel-panel button.rel-nav:active { transform: scale(0.94); }
+      @media (min-width: 1024px) {
+        .rel-panel button.rel-nav:not([hidden]) { display: inline-flex; }
+      }
+
+      /* buy bar */
+      .p-bar { transform: translateY(100%); visibility: hidden; transition: transform 0.45s var(--ease), visibility 0s 0.45s; }
+      .p-bar.is-visible { transform: none; visibility: visible; transition: transform 0.45s var(--ease); }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+        html { scroll-behavior: auto !important; }
+      }
+    </style>
+
+    <style type="text/tailwindcss">
+      @layer base {
+        html { scroll-behavior: smooth; }
+        body {
+          min-width: 320px;
+          background: var(--surface);
+          color: var(--ink);
+          font-family: Rubik, system-ui, sans-serif;
+          font-weight: 300;
+          font-size: 16px;
+        }
+        :where(a, button, input, summary):focus-visible {
+          outline: 2px solid var(--rouge);
+          outline-offset: 2px;
+        }
+        /* rouge disappears against velvet, so the ring switches to gold there */
+        .on-velvet :where(a, button, input):focus-visible {
+          outline-color: var(--gold);
+        }
+      }
+
+      @layer components {
+        /* text links: underline draws in on hover */
+        .link {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          transition: transform 0.3s var(--spring);
+        }
+        .link::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -3px;
+          height: 1px;
+          background: currentColor;
+          transform: scaleX(0);
+          transform-origin: left center;
+          transition: transform 0.35s var(--ease);
+        }
+        .link:hover { color: var(--rouge); }
+        .on-velvet .link:hover { color: var(--gold); }
+        .link:hover::after,
+        .link:focus-visible::after { transform: scaleX(1); }
+        .link:active { transform: translateY(1px); }
+
+        .icon-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          transition: transform 0.3s var(--spring), opacity 0.2s ease-out;
+        }
+        .icon-btn:hover { transform: translateY(-1px); opacity: 0.7; }
+        .icon-btn:active { transform: scale(0.92); }
+
+        .product { display: block; }
+        .product:focus-visible { outline-offset: -2px; }
+        .tile {
+          position: relative;
+          display: block;
+          aspect-ratio: 2 / 3;
+          overflow: hidden;
+          background: var(--surface-raised);
+        }
+        .tile img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.7s var(--ease), opacity 0.2s ease-out;
+        }
+        .product:hover .tile img { transform: scale(1.04); }
+        .product:active .tile img { opacity: 0.85; }
+
+        /* Slide-in menu for small screens */
+        .drawer {
+          position: fixed;
+          inset: 0 auto 0 0;
+          width: min(86vw, 360px);
+          max-width: none;
+          height: 100vh;
+          height: 100dvh;
+          max-height: none;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background: var(--surface-raised);
+          color: var(--ink);
+        }
+        .drawer[open] { animation: drawer-in 0.45s var(--ease); }
+        .drawer::backdrop { background: #4a0f2b; opacity: 0.6; }
+      }
+    </style>
+  </head>
+
+  <body class="flex min-h-screen flex-col antialiased">
+    <!-- Announcement bar -->
+    <p class="flex h-9 items-center justify-center on-velvet bg-velvet px-4 text-center text-[12px] font-light text-surface lg:text-[14px]">
+      Free shipping on orders over ₱1,000
+    </p>
+
+    <!-- Header -->
+    <header class="relative flex h-[66px] items-center px-[var(--outer)] lg:h-[77px]">
+      <button type="button" id="menu-open" class="icon-btn -ml-[5px] lg:hidden" aria-label="Open menu" aria-haspopup="dialog">
+        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M0 1h20M0 8h20M0 15h20" />
+        </svg>
+      </button>
+
+      <!-- Brand logo from brand_assets (ink wordmark, rouge ring). Small screens: it sits where the reference puts the wordmark; on very narrow phones it centres in the gap between menu and icons -->
+      <a
+        href="/"
+        class="logo absolute left-[calc(50%-44px)] top-1/2 -translate-x-1/2 min-[390px]:left-[47.4%] -translate-y-1/2 lg:static lg:ml-[2px] lg:translate-x-0 lg:translate-y-0"
+        aria-label="Maarjud home"
+      ><img src="/brand_assets/maarjud-logo.svg" alt="" width="814" height="239" class="block h-[35px] w-auto max-w-none lg:h-[38px]" /></a>
+
+      <nav aria-label="Main" class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:block">
+        <ul class="flex gap-[30px] whitespace-nowrap text-[14px] font-normal">
+          <li><a href="/" class="link" aria-current="page" data-nav-collection>Scrunchies</a></li>
+          <li><a href="#" class="link">Our Story</a></li>
+          <li><a href="#" class="link">Connect With Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="-mr-[2px] ml-auto flex items-center gap-3 lg:-mr-1 lg:gap-4">
+        <button type="button" class="link mr-1 hidden gap-2 text-[14px] font-normal xl:inline-flex" aria-label="Currency: Philippine peso">
+          <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true">
+            <rect width="20" height="7" fill="#0038a8" />
+            <rect y="7" width="20" height="7" fill="#ce1126" />
+            <path d="M0 0l9 7-9 7z" fill="#ffffff" />
+            <circle cx="3" cy="7" r="1.3" fill="#fcd116" />
+          </svg>
+          PHP ₱
+        </button>
+
+        <a href="#" class="icon-btn" aria-label="Account">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <circle cx="12" cy="9.5" r="3" />
+            <path d="M5.8 18.6c1.3-2.2 3.5-3.5 6.2-3.5s4.9 1.3 6.2 3.5" stroke-linecap="round" />
+          </svg>
+        </a>
+        <!-- search leads the group on small screens, sits second on wide ones -->
+        <button type="button" class="icon-btn order-first lg:order-none" aria-label="Search">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="9" />
+            <path d="M17.6 17.6L22 22" />
+          </svg>
+        </button>
+        <a href="#" class="icon-btn" aria-label="Bag">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4.5 8.5h15L21 21H3z" />
+            <path d="M8.5 8.5V6a3.5 3.5 0 017 0v2.5" stroke-linecap="round" />
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <div data-page="collection">
+      <!-- Collection intro -->
+      <section class="px-[46px] pb-[15px] pt-[26px] lg:mx-auto lg:grid lg:max-w-[800px] lg:grid-cols-2 lg:items-center lg:px-0 lg:pb-[51px] lg:pt-[41px]">
+        <h1 class="font-serif text-[26px] italic leading-none lg:text-[30px]">Scrunchies</h1>
+        <p class="mt-[26px] max-w-[224px] text-[14px] leading-[16.8px] lg:mt-0 lg:max-w-none lg:text-[16px] lg:leading-[19px]">
+          Placeholder copy for this collection. Say what the pieces are made from, how they sit in the hair and why
+          they are worth it, in three or four short lines about this long, give or take a word. Swap it for yours.
+        </p>
+      </section>
+
+      <!-- Filter bar -->
+      <div class="relative flex h-[49px] items-center justify-between px-[var(--outer)] text-[9px] font-light uppercase lg:pb-[7px] lg:text-[10px]">
+        <button type="button" id="filters-toggle" class="link uppercase" aria-expanded="false" aria-controls="filters">Filters</button>
+        <button type="button" id="sort-toggle" class="link uppercase" aria-expanded="false" aria-haspopup="menu" aria-controls="sort-menu">Sort by</button>
+
+        <div id="sort-menu" class="sort-menu" role="menu" aria-label="Sort by" hidden>
+          <button type="button" role="menuitemradio" aria-checked="true" data-sort="featured">Featured</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-sort="best">Best selling</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-sort="az">Alphabetically, A-Z</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-sort="za">Alphabetically, Z-A</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-sort="price-asc">Price, low to high</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-sort="price-desc">Price, high to low</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-sort="date-asc">Date, old to new</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-sort="date-desc">Date, new to old</button>
+        </div>
+      </div>
+
+      <!-- Product grid: edge to edge, hairline gaps. Names and prices sit under each tile on small screens and slide up over the photo on hover on wide ones. -->
+      <!-- Tile photos are free-licence stock stand-ins (Unsplash: Sincerely Media, John Carlo Tubelleza, Ifrah Akhter,
+           Reve Haus, StartVisuals, Sandra Ivleva, Karlis Zalans; Pexels: Luana Mundek), cropped to 2:3.
+           Replace with the shop's own product photos. Names and prices are placeholders too. -->
+      <div class="lg:flex lg:items-start">
+        <!-- Filter panel: sidebar on wide screens, drawer on small ones (same controls, same state) -->
+        <dialog id="filters" class="filters" aria-label="Filters">
+          <div class="f-head">
+            <h2 class="text-[15px] font-normal uppercase tracking-[0.12em]">Filters</h2>
+            <button type="button" class="icon-btn text-ink" data-filters-close aria-label="Close filters">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+                <path d="M1 1l14 14M15 1L1 15" />
+              </svg>
+            </button>
+          </div>
+
+          <form id="filter-form" class="f-body">
+            <details open>
+              <summary class="f-sum">Availability <span class="f-pm" aria-hidden="true"></span></summary>
+              <div class="f-list f-list-tight">
+                <label class="f-row f-row-tight"><input type="checkbox" name="stock" value="in" />In stock</label>
+                <label class="f-row f-row-tight is-off"><input type="checkbox" name="stock" value="out" disabled />Out of stock</label>
+              </div>
+            </details>
+
+            <details open>
+              <summary class="f-sum">Color <span class="f-pm" aria-hidden="true"></span></summary>
+              <div class="f-list">
+              <label class="f-row"><input type="checkbox" name="color" value="Black" /><span class="f-swatch" style="background: #1a1a1a"></span>Black</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Blue" /><span class="f-swatch" style="background: #8fb3da"></span>Blue</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Champagne" /><span class="f-swatch" style="background: #e6d5b4"></span>Champagne</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Cocoa" /><span class="f-swatch" style="background: #6b5350"></span>Cocoa</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Cream" /><span class="f-swatch is-pale" style="background: #e3dccb"></span>Cream</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Gold" /><span class="f-swatch" style="background: #d2b06a"></span>Gold</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Honey" /><span class="f-swatch" style="background: #c8963c"></span>Honey</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Ivory" /><span class="f-swatch is-pale" style="background: #f4f0e4"></span>Ivory</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Multi" /><span class="f-swatch" style="background: linear-gradient(90deg, #2f4f8a 0 25%, #8a9a7a 25% 50%, #c47a9a 50% 75%, #e0685a 75%)"></span>Multi</label>
+              <label class="f-row"><input type="checkbox" name="color" value="Peach" /><span class="f-swatch" style="background: #f4a98c"></span>Peach</label>
+              <label class="f-row" data-more hidden><input type="checkbox" name="color" value="Pearl" /><span class="f-swatch is-pale" style="background: #f1ecc9"></span>Pearl</label>
+              <label class="f-row" data-more hidden><input type="checkbox" name="color" value="Pink" /><span class="f-swatch" style="background: #f0a8bf"></span>Pink</label>
+              <label class="f-row" data-more hidden><input type="checkbox" name="color" value="Red" /><span class="f-swatch" style="background: #e0263c"></span>Red</label>
+              </div>
+              <button type="button" id="more-colors" class="f-more" aria-expanded="false">
+                <svg width="10" height="15" viewBox="0 0 10 15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+                  <path d="M1 5.5l4-4 4 4M1 9.5l4 4 4-4" />
+                </svg>
+                <span>More options</span>
+              </button>
+            </details>
+          </form>
+        </dialog>
+
+      <ul id="grid" class="grid min-w-0 flex-1 grid-cols-2 gap-px min-[750px]:grid-cols-4">
+        <li data-slug="red-satin-scrunchie" data-color="Red" data-price="180" data-rank="1" data-date="2026-09-20" data-stock="in"><a href="/product/red-satin-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-01.jpg" alt="" width="850" height="1275" /></span>
+          <span class="caption"><span class="caption-name">Red satin scrunchie</span><span class="caption-price">₱180.00 PHP</span></span>
+        </a></li>
+        <li data-slug="champagne-satin-scrunchie" data-color="Champagne" data-price="180" data-rank="4" data-date="2026-08-02" data-stock="in"><a href="/product/champagne-satin-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-02.jpg" alt="" width="850" height="1275" /></span>
+          <span class="caption"><span class="caption-name">Champagne satin scrunchie</span><span class="caption-price">₱180.00 PHP</span></span>
+        </a></li>
+        <li data-slug="velvet-scrunchie-stack" data-color="Multi" data-price="640" data-rank="9" data-date="2026-10-01" data-stock="in"><a href="/product/velvet-scrunchie-stack" class="product">
+          <span class="tile"><img src="/images/tile-03.jpg" alt="" width="850" height="1275" /></span>
+          <span class="caption"><span class="caption-name">Velvet scrunchie stack</span><span class="caption-price">₱640.00 PHP</span></span>
+        </a></li>
+        <li data-slug="cocoa-satin-scrunchie" data-color="Cocoa" data-price="180" data-rank="6" data-date="2026-07-15" data-stock="in"><a href="/product/cocoa-satin-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-04.jpg" alt="" width="850" height="1275" /></span>
+          <span class="caption"><span class="caption-name">Cocoa satin scrunchie</span><span class="caption-price">₱180.00 PHP</span></span>
+        </a></li>
+        <li data-slug="pearl-organza-scrunchie" data-color="Pearl" data-price="200" data-rank="3" data-date="2026-10-05" data-stock="in"><a href="/product/pearl-organza-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-05.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Pearl organza scrunchie</span><span class="caption-price">₱200.00 PHP</span></span>
+        </a></li>
+        <li data-slug="gold-satin-scrunchie" data-color="Gold" data-price="180" data-rank="5" data-date="2026-06-30" data-stock="in"><a href="/product/gold-satin-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-06.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Gold satin scrunchie</span><span class="caption-price">₱180.00 PHP</span></span>
+        </a></li>
+        <li data-slug="black-velvet-scrunchie" data-color="Black" data-price="220" data-rank="2" data-date="2026-09-01" data-stock="in"><a href="/product/black-velvet-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-07.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Black velvet scrunchie</span><span class="caption-price">₱220.00 PHP</span></span>
+        </a></li>
+        <li data-slug="pink-satin-scrunchie" data-color="Pink" data-price="180" data-rank="7" data-date="2026-09-12" data-stock="in"><a href="/product/pink-satin-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-08.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Pink satin scrunchie</span><span class="caption-price">₱180.00 PHP</span></span>
+        </a></li>
+        <li data-slug="honey-satin-scrunchie" data-color="Honey" data-price="180" data-rank="10" data-date="2026-05-18" data-stock="in"><a href="/product/honey-satin-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-09.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Honey satin scrunchie</span><span class="caption-price">₱180.00 PHP</span></span>
+        </a></li>
+        <li data-slug="ivory-satin-scrunchie" data-color="Ivory" data-price="180" data-rank="8" data-date="2026-06-10" data-stock="in"><a href="/product/ivory-satin-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-10.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Ivory satin scrunchie</span><span class="caption-price">₱180.00 PHP</span></span>
+        </a></li>
+        <li data-slug="linen-scrunchie-pair" data-color="Cream" data-price="340" data-rank="12" data-date="2026-08-21" data-stock="in"><a href="/product/linen-scrunchie-pair" class="product">
+          <span class="tile"><img src="/images/tile-11.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Linen scrunchie pair</span><span class="caption-price">₱340.00 PHP</span></span>
+        </a></li>
+        <li data-slug="peach-cotton-scrunchie" data-color="Peach" data-price="160" data-rank="11" data-date="2026-07-28" data-stock="in"><a href="/product/peach-cotton-scrunchie" class="product">
+          <span class="tile"><img src="/images/tile-12.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Peach cotton scrunchie</span><span class="caption-price">₱160.00 PHP</span></span>
+        </a></li>
+        <li data-slug="gold-satin-and-clip-set" data-color="Gold" data-price="320" data-rank="13" data-date="2026-04-25" data-stock="in"><a href="/product/gold-satin-and-clip-set" class="product">
+          <span class="tile"><img src="/images/tile-13.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Gold satin and clip set</span><span class="caption-price">₱320.00 PHP</span></span>
+        </a></li>
+        <li data-slug="blue-and-white-pair" data-color="Blue" data-price="340" data-rank="14" data-date="2026-03-30" data-stock="in"><a href="/product/blue-and-white-pair" class="product">
+          <span class="tile"><img src="/images/tile-14.jpg" alt="" width="850" height="1275" loading="lazy" /></span>
+          <span class="caption"><span class="caption-name">Blue and white pair</span><span class="caption-price">₱340.00 PHP</span></span>
+        </a></li>
+      </ul>
+      </div>
+
+      <p id="grid-status" class="sr-only" role="status" aria-live="polite"></p>
+
+      <!-- How we create scrunchies. The steps are placeholder copy: swap in the real process. -->
+      <section class="bg-surface-raised" aria-labelledby="process-title">
+        <div class="px-[46px] pb-6 pt-12 lg:mx-auto lg:grid lg:max-w-[800px] lg:grid-cols-2 lg:items-end lg:px-0 lg:pb-12 lg:pt-[72px]">
+          <div>
+            <svg class="h-10 w-10 text-gold" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><circle cx="32.50" cy="20.00" r="6.5" /><circle cx="30.83" cy="26.25" r="6.5" /><circle cx="26.25" cy="30.83" r="6.5" /><circle cx="20.00" cy="32.50" r="6.5" /><circle cx="13.75" cy="30.83" r="6.5" /><circle cx="9.17" cy="26.25" r="6.5" /><circle cx="7.50" cy="20.00" r="6.5" /><circle cx="9.17" cy="13.75" r="6.5" /><circle cx="13.75" cy="9.17" r="6.5" /><circle cx="20.00" cy="7.50" r="6.5" /><circle cx="26.25" cy="9.17" r="6.5" /><circle cx="30.83" cy="13.75" r="6.5" /></svg>
+            <h2 id="process-title" class="mt-4 font-serif text-[26px] italic leading-none lg:text-[30px]">How we create scrunchies</h2>
+          </div>
+          <p class="mt-4 text-[14px] leading-[16.8px] lg:mt-0 lg:text-[16px] lg:leading-[19px]">
+            By hand, a few at a time. Here is what happens before one reaches you.
+          </p>
+        </div>
+        <ol role="list" class="grid gap-px border-t border-line bg-line min-[750px]:grid-cols-4">
+          <li class="grid grid-cols-[30px_1fr] gap-y-2 bg-surface-raised py-6 pl-4 pr-6 min-[750px]:block min-[750px]:px-6 min-[750px]:pb-12 min-[750px]:pt-6">
+            <span class="row-span-2 self-start font-serif text-[30px] italic leading-[20px] lining-nums min-[750px]:block min-[750px]:text-[40px] min-[750px]:leading-none" aria-hidden="true">1</span>
+            <h3 class="text-[14px] font-normal leading-[20px] min-[750px]:mt-4">Pick the fabric</h3>
+            <p class="text-[13px] leading-[20px] text-ink-muted min-[750px]:mt-2">Satin, velvet or cotton, chosen for how it catches the light and how it feels in your hand.</p>
+          </li>
+          <li class="grid grid-cols-[30px_1fr] gap-y-2 bg-surface-raised py-6 pl-4 pr-6 min-[750px]:block min-[750px]:px-6 min-[750px]:pb-12 min-[750px]:pt-6">
+            <span class="row-span-2 self-start font-serif text-[30px] italic leading-[20px] lining-nums min-[750px]:block min-[750px]:text-[40px] min-[750px]:leading-none" aria-hidden="true">2</span>
+            <h3 class="text-[14px] font-normal leading-[20px] min-[750px]:mt-4">Cut it generous</h3>
+            <p class="text-[13px] leading-[20px] text-ink-muted min-[750px]:mt-2">Each strip is cut long and wide, so the gather comes out full.</p>
+          </li>
+          <li class="grid grid-cols-[30px_1fr] gap-y-2 bg-surface-raised py-6 pl-4 pr-6 min-[750px]:block min-[750px]:px-6 min-[750px]:pb-12 min-[750px]:pt-6">
+            <span class="row-span-2 self-start font-serif text-[30px] italic leading-[20px] lining-nums min-[750px]:block min-[750px]:text-[40px] min-[750px]:leading-none" aria-hidden="true">3</span>
+            <h3 class="text-[14px] font-normal leading-[20px] min-[750px]:mt-4">Sew and thread</h3>
+            <p class="text-[13px] leading-[20px] text-ink-muted min-[750px]:mt-2">We stitch the strip into a tube, turn it out and run a soft elastic through.</p>
+          </li>
+          <li class="grid grid-cols-[30px_1fr] gap-y-2 bg-surface-raised py-6 pl-4 pr-6 min-[750px]:block min-[750px]:px-6 min-[750px]:pb-12 min-[750px]:pt-6">
+            <span class="row-span-2 self-start font-serif text-[30px] italic leading-[20px] lining-nums min-[750px]:block min-[750px]:text-[40px] min-[750px]:leading-none" aria-hidden="true">4</span>
+            <h3 class="text-[14px] font-normal leading-[20px] min-[750px]:mt-4">Finish by hand</h3>
+            <p class="text-[13px] leading-[20px] text-ink-muted min-[750px]:mt-2">The last seam is closed by hand, and every scrunchie is checked before it is packed.</p>
+          </li>
+        </ol>
+      </section>
+      </div>
+
+      <!-- Product page: shown at /product/name-of-product and filled in from the product list above -->
+      <div data-page="product">
+        <article class="px-4 pb-[30px] min-[750px]:mx-[var(--outer)] min-[750px]:px-0">
+          <div id="p-found" class="min-[750px]:grid min-[750px]:grid-cols-2 min-[750px]:gap-8">
+            <!-- Photos: a swipeable row on small screens, a stacked column on wide ones -->
+            <div id="p-gallery" class="pdp-gallery" role="region" aria-label="Product photos"></div>
+
+            <!-- Product details: stay in view while the photos scroll past on wide screens -->
+            <div class="lg:pl-[50px]">
+              <div class="min-[750px]:sticky min-[750px]:top-0 min-[750px]:flex min-[750px]:min-h-screen min-[750px]:items-center">
+                <div class="min-[750px]:mx-auto min-[750px]:w-full min-[750px]:max-w-[550px]">
+                  <h1 id="p-title" class="mt-[11px] pr-[70px] font-promo text-[28px] font-normal leading-[33.6px] min-[750px]:mt-0"></h1>
+                  <div class="mb-4 flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between lg:gap-5">
+                    <p id="p-price" class="py-1 text-[14px] leading-[19.25px] lg:text-[16px] lg:leading-[22px]"></p>
+                    <p class="text-[13px] leading-[18.2px]">Placeholder note for this product</p>
+                  </div>
+
+                  <div class="pb-[25px]">
+                    <p class="mb-[9px] text-[12px] font-normal uppercase leading-4"><span class="sr-only">Colour: </span><span id="p-color"></span></p>
+                    <ul id="p-swatches" class="swatches" role="list"></ul>
+                  </div>
+
+                  <div class="mb-8 grid gap-[10px] lg:grid-cols-2 lg:items-center">
+                    <button type="button" id="p-add" class="btn-primary mt-[15px] lg:-mt-[2px]">Add to bag</button>
+                    <div>
+                      <button type="button" class="btn-quiet">Buy it now</button>
+                      <p class="mt-3 text-[12px] leading-[14px] lg:mt-[14px] lg:text-[14px] lg:leading-[16.5px]">
+                        Placeholder note about checkout. Say how you take payment, when orders ship and how returns
+                        and exchanges work, in four or five short lines like these. Swap it for yours.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="pt-[15px] lg:pb-[37px]">
+                    <div role="tablist" aria-label="Product information" class="flex gap-[29px]">
+                      <button type="button" role="tab" id="p-tab-desc" aria-controls="p-panel-desc" aria-selected="true" class="tab">Description</button>
+                      <button type="button" role="tab" id="p-tab-details" aria-controls="p-panel-details" aria-selected="false" tabindex="-1" class="tab">Details</button>
+                    </div>
+                    <div id="p-panel-desc" role="tabpanel" aria-labelledby="p-tab-desc" class="pdp-copy">
+                      <p>
+                        Placeholder description. Say what this scrunchie is made from, how it sits in the hair, how
+                        firmly it holds and why it is worth it, in two or three lines about this long. Swap it for yours.
+                      </p>
+                      <p>Placeholder fabric line</p>
+                    </div>
+                    <div id="p-panel-details" role="tabpanel" aria-labelledby="p-tab-details" class="pdp-copy" hidden>
+                      <p>Placeholder details. Add the size, the fabric and how to care for it.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shown when the address does not match any product -->
+          <div id="p-missing" class="px-[30px] py-24 text-center" hidden>
+            <h1 class="font-promo text-[28px] font-normal leading-[33.6px]">We couldn't find that scrunchie</h1>
+            <p class="mt-4 text-[14px]"><a href="/" class="link text-rouge">See all scrunchies</a></p>
+          </div>
+        </article>
+
+        <section class="pb-[30px] pt-[47px] lg:pb-[50px] lg:pt-[73px]" aria-label="More scrunchies">
+          <div role="tablist" aria-label="More scrunchies" class="mb-8 flex justify-center gap-4 whitespace-nowrap px-2 min-[360px]:gap-[30px] min-[360px]:px-[var(--outer)]">
+            <button type="button" role="tab" id="rel-tab-related" aria-controls="rel-panel-related" aria-selected="true" class="tab uppercase">Related products</button>
+            <button type="button" role="tab" id="rel-tab-recent" aria-controls="rel-panel-recent" aria-selected="false" tabindex="-1" class="tab uppercase">Recently viewed</button>
+          </div>
+          <div id="rel-panel-related" role="tabpanel" aria-labelledby="rel-tab-related" class="rel-panel">
+            <ul class="rel-slider" role="list"></ul>
+            <button type="button" class="rel-nav rel-prev" aria-label="Previous products" hidden>
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+            </button>
+            <button type="button" class="rel-nav rel-next" aria-label="Next products" hidden>
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
+          <div id="rel-panel-recent" role="tabpanel" aria-labelledby="rel-tab-recent" class="rel-panel" hidden>
+            <ul class="rel-slider" role="list"></ul>
+            <p class="rel-empty px-[30px] py-12 text-center text-[14px] text-ink-muted" hidden>Scrunchies you look at will show up here.</p>
+            <button type="button" class="rel-nav rel-prev" aria-label="Previous products" hidden>
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+            </button>
+            <button type="button" class="rel-nav rel-next" aria-label="Next products" hidden>
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer: stacked on small screens, a single bar on wide ones -->
+    <footer class="on-velvet mt-px bg-velvet px-5 pb-[39px] pt-[39px] text-surface lg:h-[47px] lg:p-0">
+      <div class="lg:grid lg:h-full lg:grid-cols-[1fr_minmax(120px,440px)_1fr] lg:items-center lg:gap-x-6 min-[1500px]:gap-x-0 lg:pl-5 lg:pr-14">
+        <nav aria-label="Footer" class="hidden lg:block lg:pl-[209px]">
+          <ul class="flex gap-x-[30px] text-[12px]">
+            <li><a href="#" class="link">Journal</a></li>
+            <li><a href="#" class="link">Instagram</a></li>
+            <li><a href="#" class="link">Contact</a></li>
+          </ul>
+        </nav>
+
+        <form class="flex h-[29px] items-center border-b border-surface lg:mb-[3px] lg:h-[25px]" onsubmit="event.preventDefault()">
+          <label for="newsletter-email" class="sr-only">Email</label>
+          <!-- 16px on phones: iOS zooms the page (and lets it pan sideways) when a focused field has smaller text -->
+          <input
+            id="newsletter-email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            placeholder="Email"
+            class="h-full min-w-0 flex-1 bg-transparent text-[16px] font-light text-surface outline-offset-4 placeholder:text-blush lg:text-[12px]"
+          />
+          <button type="submit" class="link px-3 text-[14px] font-light uppercase lg:text-[11px]">Join</button>
+        </form>
+
+        <nav aria-label="Policies" class="mt-[24px] lg:-mr-9 lg:mt-0 lg:justify-self-end">
+          <ul class="text-[12px] uppercase leading-[22px] lg:flex lg:gap-x-[30px] lg:whitespace-nowrap lg:text-[12px] lg:normal-case lg:leading-normal">
+            <li><a href="#" class="link">Shipping &amp; Returns</a></li>
+            <li><a href="#" class="link">Privacy</a></li>
+            <li><a href="#" class="link">Terms of Service</a></li>
+            <li><a href="#" class="link">Accessibility</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+    <div data-page="product" class="hidden h-20 bg-velvet lg:block" aria-hidden="true"></div>
+
+    <!-- Buy bar (wide screens, product page): slides up once the main Add to bag button has scrolled out of view -->
+    <div id="p-bar" data-page="product" class="p-bar fixed inset-x-0 bottom-0 z-30 hidden h-20 items-center justify-between bg-surface pl-[220px] pr-[var(--outer)] lg:flex">
+      <p class="flex items-center">
+        <span id="p-bar-title" class="font-promo text-[18.4px] italic leading-[25px]"></span>
+        <span class="px-[10px]" aria-hidden="true">&bull;</span>
+        <span id="p-bar-price" class="text-[16px] leading-[25px]"></span>
+      </p>
+      <button type="button" class="btn-pill">Add to bag</button>
+    </div>
+
+    <!-- Offer tab: full width and peeking up from the bottom edge on small screens, a corner tab on wide ones -->
+    <a
+      href="#newsletter-email"
+      class="fixed -bottom-[13px] left-5 right-5 z-40 flex h-[50px] items-center justify-center rounded-t-[4px] bg-blush font-promo text-[18px] font-normal text-rouge transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-[3px] active:translate-y-0 lg:bottom-0 lg:right-auto lg:w-[184px]"
+    >Get 10% Off</a>
+
+    <!-- Menu drawer (small screens) -->
+    <dialog id="menu" class="drawer" aria-label="Menu">
+      <div class="flex h-full flex-col px-4 pb-8">
+        <div class="flex h-[66px] shrink-0 items-center">
+          <button type="button" class="icon-btn -ml-[5px]" data-menu-close aria-label="Close menu">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+              <path d="M1 1l16 16M17 1L1 17" />
+            </svg>
+          </button>
+        </div>
+
+        <nav aria-label="Main">
+          <ul class="text-[19px] leading-[44px]">
+            <li><a href="#" class="link">Shop All</a></li>
+            <li><a href="#" class="link">Headbands</a></li>
+            <li><a href="/" class="link" aria-current="page" data-nav-collection>Scrunchies</a></li>
+            <li><a href="#" class="link">Sets</a></li>
+            <li><a href="#" class="link">Gift Card</a></li>
+            <li><a href="#" class="link">Our Story</a></li>
+          </ul>
+        </nav>
+
+        <ul class="mt-auto text-[14px] leading-[32px]">
+          <li><a href="#" class="link">Journal</a></li>
+          <li><a href="#" class="link">Instagram</a></li>
+          <li><a href="#" class="link">Contact</a></li>
+        </ul>
+      </div>
+    </dialog>
+
+    <script>
+      (() => {
+        const menu = document.getElementById('menu');
+        document.getElementById('menu-open').addEventListener('click', () => menu.showModal());
+        menu.querySelector('[data-menu-close]').addEventListener('click', () => menu.close());
+        // close when the dimmed area outside the panel is tapped
+        menu.addEventListener('click', (event) => {
+          if (event.target === menu) menu.close();
+        });
+      })();
+
+      // ---- Filters and sorting ----
+      (() => {
+        const grid = document.getElementById('grid');
+        const items = [...grid.children];
+        items.forEach((li, i) => {
+          li.dataset.index = i;
+          li.dataset.name = li.querySelector('.product > span:last-child > span').textContent.trim();
+        });
+        const status = document.getElementById('grid-status');
+
+        // pause the caption slide while the window size is changing
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+          grid.classList.add('is-resizing');
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => grid.classList.remove('is-resizing'), 250);
+        });
+
+        // Filter panel: in-page sidebar on wide screens, modal drawer on small ones
+        const panel = document.getElementById('filters');
+        const toggle = document.getElementById('filters-toggle');
+        const wide = window.matchMedia('(min-width: 1024px)');
+        const syncToggle = () => {
+          toggle.setAttribute('aria-expanded', String(panel.open));
+          toggle.textContent = panel.open && wide.matches ? 'Hide filters' : 'Filters';
+        };
+        const openPanel = () => { wide.matches ? panel.show() : panel.showModal(); syncToggle(); };
+        toggle.addEventListener('click', () => (panel.open ? panel.close() : openPanel()));
+        panel.addEventListener('close', syncToggle);
+        panel.querySelector('[data-filters-close]').addEventListener('click', () => panel.close());
+        panel.addEventListener('click', (event) => { if (event.target === panel) panel.close(); });
+        wide.addEventListener('change', () => { if (panel.open) { panel.close(); openPanel(); } });
+
+        const form = document.getElementById('filter-form');
+        const applyFilters = () => {
+          const colors = [...form.querySelectorAll('input[name="color"]:checked')].map((input) => input.value);
+          const inStockOnly = form.querySelector('input[name="stock"][value="in"]').checked;
+          let shown = 0;
+          items.forEach((li) => {
+            const match = (!colors.length || colors.includes(li.dataset.color)) && (!inStockOnly || li.dataset.stock === 'in');
+            li.hidden = !match;
+            if (match) shown += 1;
+          });
+          status.textContent = 'Showing ' + shown + ' of ' + items.length + ' products.';
+        };
+        form.addEventListener('change', applyFilters);
+        form.addEventListener('submit', (event) => event.preventDefault());
+
+        const more = document.getElementById('more-colors');
+        more.addEventListener('click', () => {
+          const expand = more.getAttribute('aria-expanded') !== 'true';
+          form.querySelectorAll('[data-more]').forEach((row) => { row.hidden = !expand; });
+          more.setAttribute('aria-expanded', String(expand));
+          more.querySelector('span').textContent = expand ? 'Fewer options' : 'More options';
+        });
+
+        // Sort by
+        const sortToggle = document.getElementById('sort-toggle');
+        const sortMenu = document.getElementById('sort-menu');
+        const options = [...sortMenu.querySelectorAll('button')];
+        const num = (li, key) => Number(li.dataset[key]);
+        const sorters = {
+          featured: (a, b) => num(a, 'index') - num(b, 'index'),
+          best: (a, b) => num(a, 'rank') - num(b, 'rank'),
+          az: (a, b) => a.dataset.name.localeCompare(b.dataset.name),
+          za: (a, b) => b.dataset.name.localeCompare(a.dataset.name),
+          'price-asc': (a, b) => num(a, 'price') - num(b, 'price'),
+          'price-desc': (a, b) => num(b, 'price') - num(a, 'price'),
+          'date-asc': (a, b) => a.dataset.date.localeCompare(b.dataset.date),
+          'date-desc': (a, b) => b.dataset.date.localeCompare(a.dataset.date)
+        };
+        const setMenu = (open) => {
+          sortMenu.hidden = !open;
+          sortToggle.setAttribute('aria-expanded', String(open));
+          if (open) (options.find((o) => o.getAttribute('aria-checked') === 'true') || options[0]).focus();
+        };
+        sortToggle.addEventListener('click', () => setMenu(sortMenu.hidden));
+        options.forEach((option) => {
+          option.addEventListener('click', () => {
+            const sorter = sorters[option.dataset.sort];
+            // ties keep the featured order
+            [...items].sort((a, b) => sorter(a, b) || sorters.featured(a, b)).forEach((li) => grid.append(li));
+            options.forEach((o) => o.setAttribute('aria-checked', String(o === option)));
+            status.textContent = 'Sorted by ' + option.textContent.trim() + '.';
+            setMenu(false);
+            sortToggle.focus();
+          });
+        });
+        sortMenu.addEventListener('keydown', (event) => {
+          const at = options.indexOf(document.activeElement);
+          if (event.key === 'ArrowDown') { event.preventDefault(); options[(at + 1) % options.length].focus(); }
+          if (event.key === 'ArrowUp') { event.preventDefault(); options[(at - 1 + options.length) % options.length].focus(); }
+          if (event.key === 'Escape') { setMenu(false); sortToggle.focus(); }
+        });
+        document.addEventListener('click', (event) => {
+          if (!sortMenu.hidden && !sortMenu.contains(event.target) && event.target !== sortToggle) setMenu(false);
+        });
+      })();
+
+      // ---------- Product page (/product/name-of-product) ----------
+      (() => {
+        const match = location.pathname.match(/^\/product\/([^/]+)\/?$/);
+        if (!match) return;
+
+        // products are read from the collection list, so there is one place to edit them
+        const products = [...document.querySelectorAll('#grid > li')].map((li) => ({
+          li,
+          slug: li.dataset.slug,
+          name: li.querySelector('.caption-name').textContent,
+          price: li.querySelector('.caption-price').textContent,
+          color: li.dataset.color,
+          image: li.querySelector('img').getAttribute('src'),
+        }));
+        const bySlug = new Map(products.map((p) => [p.slug, p]));
+        const product = bySlug.get(decodeURIComponent(match[1]).toLowerCase());
+
+        document.querySelectorAll('[data-nav-collection]').forEach((a) => a.removeAttribute('aria-current'));
+
+        // a row of product cards, reused by both tabs
+        const fillRow = (panel, list) => {
+          const row = panel.querySelector('.rel-slider');
+          row.replaceChildren(...list.map((p) => {
+            const li = document.createElement('li');
+            li.className = 'rel-item';
+            li.append(p.li.querySelector('a.product').cloneNode(true));
+            return li;
+          }));
+          const empty = panel.querySelector('.rel-empty');
+          if (empty) empty.hidden = list.length > 0;
+          const prev = panel.querySelector('.rel-prev');
+          const next = panel.querySelector('.rel-next');
+          const sync = () => {
+            prev.hidden = row.scrollLeft < 8;
+            next.hidden = row.scrollLeft + row.clientWidth > row.scrollWidth - 8;
+          };
+          const step = (dir) => row.scrollBy({ left: dir * row.clientWidth * 0.8, behavior: 'smooth' });
+          prev.onclick = () => step(-1);
+          next.onclick = () => step(1);
+          row.onscroll = sync;
+          panel.syncNav = sync;
+          sync();
+        };
+
+        // tabs (Description / Details, Related / Recently viewed)
+        document.querySelectorAll('[data-page="product"] [role="tablist"]').forEach((list) => {
+          const tabs = [...list.querySelectorAll('[role="tab"]')];
+          const select = (tab, focus) => {
+            tabs.forEach((t) => {
+              const on = t === tab;
+              t.setAttribute('aria-selected', String(on));
+              t.tabIndex = on ? 0 : -1;
+              const panel = document.getElementById(t.getAttribute('aria-controls'));
+              panel.hidden = !on;
+              if (on && panel.syncNav) panel.syncNav();
+            });
+            if (focus) tab.focus();
+          };
+          tabs.forEach((tab, i) => {
+            tab.addEventListener('click', () => select(tab));
+            tab.addEventListener('keydown', (e) => {
+              if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+              e.preventDefault();
+              select(tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length], true);
+            });
+          });
+        });
+
+        const relatedPanel = document.getElementById('rel-panel-related');
+        const recentPanel = document.getElementById('rel-panel-recent');
+
+        if (!product) {
+          document.title = 'Not found | Maarjud';
+          document.getElementById('p-found').hidden = true;
+          document.getElementById('p-missing').hidden = false;
+          fillRow(relatedPanel, products.slice(0, 6));
+          fillRow(recentPanel, []);
+          return;
+        }
+
+        document.title = `${product.name} | Maarjud`;
+        document.getElementById('p-title').textContent = product.name;
+        document.getElementById('p-price').textContent = product.price;
+        document.getElementById('p-color').textContent = product.color;
+        document.getElementById('p-bar-title').textContent = product.name;
+        document.getElementById('p-bar-price').textContent = product.price;
+
+        // photos: the product shot, then two placeholders until there are more photos
+        const gallery = document.getElementById('p-gallery');
+        const photos = [
+          { src: product.image, alt: product.name },
+          { src: 'https://placehold.co/850x1275/e8d6c9/6b4f5c?text=Photo+2', alt: '' },
+          { src: 'https://placehold.co/850x1275/e8d6c9/6b4f5c?text=Photo+3', alt: '' },
+        ];
+        gallery.replaceChildren(...photos.map((photo, i) => {
+          const figure = document.createElement('figure');
+          figure.className = 'pdp-photo';
+          const img = new Image(850, 1275);
+          img.alt = photo.alt;
+          if (i > 0) img.loading = 'lazy';
+          img.src = photo.src;
+          figure.append(img);
+          return figure;
+        }));
+        // the photo row only scrolls sideways on small screens, so it is only a tab stop there
+        const wide = window.matchMedia('(min-width: 750px)');
+        const syncGallery = () => (wide.matches ? gallery.removeAttribute('tabindex') : gallery.setAttribute('tabindex', '0'));
+        wide.addEventListener('change', syncGallery);
+        syncGallery();
+
+        // colours: the plain satin scrunchies are one family; everything else stands alone
+        const family = (p) => (/ satin scrunchie$/.test(p.name) ? 'satin' : p.slug);
+        const siblings = products.filter((p) => family(p) === family(product));
+        document.getElementById('p-swatches').replaceChildren(...siblings.map((p) => {
+          const source = document.querySelector(`#filter-form input[name="color"][value="${p.color}"] + .f-swatch`);
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = `/product/${p.slug}`;
+          a.className = 'swatch' + (source && source.classList.contains('is-pale') ? ' is-pale' : '');
+          if (source) a.style.background = source.style.background;
+          a.setAttribute('aria-label', p.color);
+          if (p === product) a.setAttribute('aria-current', 'page');
+          li.append(a);
+          return li;
+        }));
+
+        // related: same family first, then the rest in collection order
+        const others = products.filter((p) => p !== product);
+        fillRow(relatedPanel, [...others.filter((p) => family(p) === family(product)), ...others.filter((p) => family(p) !== family(product))].slice(0, 6));
+
+        // recently viewed lives in this browser only
+        const KEY = 'maarjud-recently-viewed';
+        let recent = [];
+        try { recent = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { recent = []; }
+        if (!Array.isArray(recent)) recent = [];
+        fillRow(recentPanel, recent.filter((slug) => slug !== product.slug).map((slug) => bySlug.get(slug)).filter(Boolean));
+        try {
+          localStorage.setItem(KEY, JSON.stringify([product.slug, ...recent.filter((slug) => slug !== product.slug)].slice(0, 8)));
+        } catch (e) { /* private window: the tab just stays empty */ }
+
+        // buy bar: only while the main button is off screen
+        const bar = document.getElementById('p-bar');
+        new IntersectionObserver(([entry]) => bar.classList.toggle('is-visible', !entry.isIntersecting)).observe(document.getElementById('p-add'));
+      })();
+    </script>
+  </body>
+</html>
