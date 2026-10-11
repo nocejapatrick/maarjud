@@ -19,7 +19,8 @@ This is a Next.js 16 site (App Router, TypeScript, Tailwind CSS 3). It was a sin
 
 ## Privacy notice
 - A notice (`components/ConsentBanner.tsx`) asks each new visitor to choose **Accept** or **Only my bag**. The choice is kept by `components/ConsentProvider.tsx`.
-- The bag is always saved in the browser, because it cannot work otherwise. Anything optional must check `useConsent().choice === 'all'` before saving to the browser. Today that is only "Recently viewed". If analytics or other tracking is ever added, it must wait for Accept in the same way, and the notice and `/privacy` page text must be updated to say so.
+- The bag is always saved in the browser, because it cannot work otherwise. Anything optional must check `useConsent().choice === 'all'` first. Today that is "Recently viewed" and Google Analytics. Any other tracking added later must wait for Accept in the same way, and the notice and `/privacy` page text must be updated to say so.
+- Google Analytics (`components/Analytics.tsx`, measurement ID in `lib/site.ts`) loads only on the live site (production builds, never `npm run dev`) and only after Accept. Choosing "Only my bag" switches it off and removes its cookies.
 - `app/privacy/page.tsx` is the Privacy page. Two of its sections are still placeholders for the shop owner to fill in.
 
 ## Reference Images

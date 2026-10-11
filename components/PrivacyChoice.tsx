@@ -14,8 +14,8 @@ export function PrivacyChoice() {
     <>
       <p>
         {choice === 'all'
-          ? 'You accepted: we save your bag and the pieces you have looked at.'
-          : 'You chose only your bag: we save your bag and nothing else.'}
+          ? 'You accepted: we save your bag and the pieces you have looked at, and Google Analytics counts your visits.'
+          : 'You chose only your bag: we save your bag and nothing else, and Google Analytics is off.'}
       </p>
       <p>
         <button type="button" className="btn-quiet mt-2 max-w-[240px]" onClick={reset}>

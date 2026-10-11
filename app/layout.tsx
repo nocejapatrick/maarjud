@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Baskervville, Rubik } from 'next/font/google';
+import { Analytics } from '@/components/Analytics';
 import { BagDrawer } from '@/components/BagDrawer';
 import { BagProvider } from '@/components/BagProvider';
 import { ConsentBanner } from '@/components/ConsentBanner';
@@ -67,6 +68,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <BagDrawer />
         </BagProvider>
+
+        <Analytics />
         </ConsentProvider>
       </body>
     </html>

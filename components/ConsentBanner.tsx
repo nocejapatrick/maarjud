@@ -17,7 +17,7 @@ export function ConsentBanner() {
     >
       <p className="text-[13px] leading-[18px]">
         We save your bag in this browser so it is still here when you come back. With your OK, we will also remember
-        the pieces you have looked at. No ads, no tracking.{' '}
+        the pieces you have looked at and use Google Analytics to see how the site is used. No ads.{' '}
         <Link href="/privacy" className="underline underline-offset-2 hover:text-gold active:opacity-70">
           Privacy
         </Link>

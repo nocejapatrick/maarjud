@@ -7,6 +7,10 @@ export const site = {
   // TODO: put the shop's Instagram username here (without the @), for example 'maarjud.ph'.
   // While it is empty the bag shows the order message to copy, but no "Open Instagram" button.
   instagram: '',
+
+  // Google Analytics measurement ID. It only runs on the live site, and only for visitors who choose Accept on the
+  // privacy notice (see components/Analytics.tsx). Leave it empty to switch analytics off.
+  googleAnalyticsId: 'G-MEP6B95DRM',
 };
 
 export const mainNav = [

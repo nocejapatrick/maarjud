@@ -3,10 +3,10 @@ import { PrivacyChoice } from '@/components/PrivacyChoice';
 
 export const metadata: Metadata = {
   title: 'Privacy',
-  description: 'What the Maarjud site saves in your browser and what happens to the details you send when you order.',
+  description: 'What the Maarjud site saves in your browser, how it uses Google Analytics and what happens to the details you send when you order.',
 };
 
-// DRAFT: the first and third sections describe what the site really does. The "When you order" and "Questions"
+// DRAFT: the first three sections describe what the site really does. The "When you order" and "Questions"
 // sections are placeholders: the shop owner needs to fill them in (and have them checked) before the site goes live.
 export default function PrivacyPage() {
   return (
@@ -19,7 +19,15 @@ export default function PrivacyPage() {
         <li>The pieces you have recently looked at, only if you accept.</li>
         <li>Which of the two choices you picked, so we do not ask on every visit.</li>
       </ul>
-      <p>All of this stays in your browser. We do not use advertising or tracking cookies.</p>
+      <p>These three stay in your browser and are not sent to us.</p>
+
+      <h2>Google Analytics</h2>
+      <p>
+        Only if you accept, we use Google Analytics to see how many people visit and which pages they look at. It sets
+        its own cookies in your browser and sends Google details of your visit, such as the pages you open, the kind
+        of device you use and roughly where you are. We do not use it for advertising.
+      </p>
+      <p>If you choose only your bag, Google Analytics does not load, and any cookies it set earlier are removed.</p>
 
       <h2>When you order</h2>
       <p>
