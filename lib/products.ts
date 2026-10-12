@@ -1,13 +1,15 @@
 // The product list: the one place to add, remove or edit products.
 // Each product belongs to one collection (see `collections` below). Within a collection, the order here is the
 // "Featured" order on its page.
-// Scrunchie photos are free-licence stock stand-ins (Unsplash: Sincerely Media, John Carlo Tubelleza, Ifrah Akhter,
-// Reve Haus, StartVisuals, Sandra Ivleva, Karlis Zalans; Pexels: Luana Mundek), cropped to 2:3.
-// Replace with the shop's own product photos. Names and prices are placeholders too.
-// Hair clip photos are public-domain (CC0) stand-ins from the WordPress Photo Directory, cropped to 2:3:
-// wordpress.org/photos/photo/ 36768b93fd, 5769d55084, 4996a15c6e, 109684baf5, 3546a1983d, 59969bd182, 63669bac40,
-// 8226a08012. They show crocheted flowers and bows rather than the shop's own clips: replace them too.
-// pexel-hair-clips.jpg (bunny and carrot clips) is a Pexels photo the shop owner added; it is a stand-in as well.
+// silver-satin-scrunchie.jpg and silver-satin-scrunchie-with-green-bow.jpg are the shop's own scrunchies, cut out
+// and placed on the same plain studio backdrop with a soft shadow.
+// tulip-hair-clip-on-lace.jpg is the shop's own tulip clip (front and back) placed on the bare tabletop from a Pexels
+// stock photo (pexel-hair-clips.jpg), with a lace doily that was drawn for it. It is a composite, not a single photograph.
+// rose-hair-clip-on-lace.jpg is the shop's own rose clip (a cut-out the shop owner supplied) placed on that same
+// tabletop and drawn doily.
+// sunflower-hair-clip-on-lace.jpg is the shop's own sunflower clip (front and back), cut out of a photo on white and
+// placed on that same tabletop and drawn doily.
+// Prices are still placeholders.
 
 export type Collection = {
   slug: 'scrunchies' | 'hair-clips';
@@ -84,31 +86,13 @@ export type Product = {
 };
 
 export const products: Product[] = [
-  { collection: 'scrunchies', family: 'satin', slug: 'red-satin-scrunchie', name: 'Red satin scrunchie', price: 180, color: 'Red', rank: 1, date: '2026-09-20', inStock: true, image: '/images/tile-01.jpg' },
-  { collection: 'scrunchies', family: 'satin', slug: 'champagne-satin-scrunchie', name: 'Champagne satin scrunchie', price: 180, color: 'Champagne', rank: 4, date: '2026-08-02', inStock: true, image: '/images/tile-02.jpg' },
-  { collection: 'scrunchies', slug: 'velvet-scrunchie-stack', name: 'Velvet scrunchie stack', price: 640, color: 'Multi', rank: 9, date: '2026-10-01', inStock: true, image: '/images/tile-03.jpg' },
-  { collection: 'scrunchies', family: 'satin', slug: 'cocoa-satin-scrunchie', name: 'Cocoa satin scrunchie', price: 180, color: 'Cocoa', rank: 6, date: '2026-07-15', inStock: true, image: '/images/tile-04.jpg' },
-  { collection: 'scrunchies', slug: 'pearl-organza-scrunchie', name: 'Pearl organza scrunchie', price: 200, color: 'Pearl', rank: 3, date: '2026-10-05', inStock: true, image: '/images/tile-05.jpg' },
-  { collection: 'scrunchies', family: 'satin', slug: 'gold-satin-scrunchie', name: 'Gold satin scrunchie', price: 180, color: 'Gold', rank: 5, date: '2026-06-30', inStock: true, image: '/images/tile-06.jpg' },
-  { collection: 'scrunchies', slug: 'black-velvet-scrunchie', name: 'Black velvet scrunchie', price: 220, color: 'Black', rank: 2, date: '2026-09-01', inStock: true, image: '/images/tile-07.jpg' },
-  { collection: 'scrunchies', family: 'satin', slug: 'pink-satin-scrunchie', name: 'Pink satin scrunchie', price: 180, color: 'Pink', rank: 7, date: '2026-09-12', inStock: true, image: '/images/tile-08.jpg' },
-  { collection: 'scrunchies', family: 'satin', slug: 'honey-satin-scrunchie', name: 'Honey satin scrunchie', price: 180, color: 'Honey', rank: 10, date: '2026-05-18', inStock: true, image: '/images/tile-09.jpg' },
-  { collection: 'scrunchies', family: 'satin', slug: 'ivory-satin-scrunchie', name: 'Ivory satin scrunchie', price: 180, color: 'Ivory', rank: 8, date: '2026-06-10', inStock: true, image: '/images/tile-10.jpg' },
-  { collection: 'scrunchies', slug: 'linen-scrunchie-pair', name: 'Linen scrunchie pair', price: 340, color: 'Cream', rank: 12, date: '2026-08-21', inStock: true, image: '/images/tile-11.jpg' },
-  { collection: 'scrunchies', slug: 'peach-cotton-scrunchie', name: 'Peach cotton scrunchie', price: 160, color: 'Peach', rank: 11, date: '2026-07-28', inStock: true, image: '/images/tile-12.jpg' },
-  { collection: 'scrunchies', slug: 'gold-satin-and-clip-set', name: 'Gold satin and clip set', price: 320, color: 'Gold', rank: 13, date: '2026-04-25', inStock: true, image: '/images/tile-13.jpg' },
-  { collection: 'scrunchies', slug: 'blue-and-white-pair', name: 'Blue and white pair', price: 340, color: 'Blue', rank: 14, date: '2026-03-30', inStock: true, image: '/images/tile-14.jpg' },
+  { collection: 'scrunchies', slug: 'silver-satin-scrunchie', name: 'Silver satin scrunchie', price: 180, color: 'Silver', rank: 16, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie.jpg' },
+  { collection: 'scrunchies', slug: 'silver-satin-scrunchie-with-green-bow', name: 'Silver satin scrunchie with green bow', price: 220, color: 'Silver', rank: 15, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie-with-green-bow.jpg' },
 
-  // Hair clips: placeholder names and prices, named after what the stand-in photos show
-  { collection: 'hair-clips', slug: 'bunny-and-carrot-crochet-clip-set', name: 'Bunny and carrot crochet clip set', price: 320, color: 'Multi', rank: 9, date: '2026-10-11', inStock: true, image: '/images/pexel-hair-clips.jpg' },
-  { collection: 'hair-clips', family: 'rose', slug: 'lilac-rose-crochet-clip', name: 'Lilac rose crochet clip', price: 140, color: 'Lilac', rank: 2, date: '2026-10-06', inStock: true, image: '/images/clip-01.jpg' },
-  { collection: 'hair-clips', slug: 'gold-sunflower-crochet-clip', name: 'Gold sunflower crochet clip', price: 150, color: 'Gold', rank: 1, date: '2026-10-02', inStock: true, image: '/images/clip-02.jpg' },
-  { collection: 'hair-clips', family: 'rose', slug: 'red-rose-crochet-clip', name: 'Red rose crochet clip', price: 140, color: 'Red', rank: 3, date: '2026-09-28', inStock: true, image: '/images/clip-03.jpg' },
-  { collection: 'hair-clips', slug: 'pink-lotus-crochet-clip', name: 'Pink lotus crochet clip', price: 160, color: 'Pink', rank: 4, date: '2026-09-15', inStock: true, image: '/images/clip-04.jpg' },
-  { collection: 'hair-clips', slug: 'ivory-bloom-hair-clip', name: 'Ivory bloom hair clip', price: 180, color: 'Ivory', rank: 5, date: '2026-09-03', inStock: true, image: '/images/clip-05.jpg' },
-  { collection: 'hair-clips', slug: 'marigold-crochet-clip', name: 'Marigold crochet clip', price: 150, color: 'Marigold', rank: 6, date: '2026-08-30', inStock: true, image: '/images/clip-06.jpg' },
-  { collection: 'hair-clips', slug: 'pink-bow-hair-clip', name: 'Pink bow hair clip', price: 130, color: 'Pink', rank: 7, date: '2026-08-12', inStock: true, image: '/images/clip-07.jpg' },
-  { collection: 'hair-clips', slug: 'rose-garland-crochet-clip', name: 'Rose garland crochet clip', price: 220, color: 'Red', rank: 8, date: '2026-07-20', inStock: true, image: '/images/clip-08.jpg' },
+  // Hair clips
+  { collection: 'hair-clips', slug: 'sunflower-hair-clip', name: 'Sunflower hair clip', price: 150, color: 'Yellow', rank: 12, date: '2026-10-11', inStock: true, image: '/images/sunflower-hair-clip-on-lace.jpg' },
+  { collection: 'hair-clips', slug: 'rose-hair-clip', name: 'Rose hair clip', price: 120, color: 'Red', rank: 11, date: '2026-10-11', inStock: true, image: '/images/rose-hair-clip-on-lace.jpg' },
+  { collection: 'hair-clips', slug: 'tulip-crochet-hair-clip', name: 'Tulip crochet hair clip', price: 150, color: 'Green', rank: 10, date: '2026-10-11', inStock: true, image: '/images/tulip-hair-clip-on-lace.jpg' },
 ];
 
 const bySlug = new Map(products.map((product) => [product.slug, product]));

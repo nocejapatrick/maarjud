@@ -131,9 +131,9 @@ export function Header() {
           <ul className="mt-auto text-[14px] leading-[32px]">
             {secondaryNav.map((item) => (
               <li key={item.label}>
-                <a href={item.href} className="link">
+                <Link href={item.href} className="link" onClick={() => menu.current?.close()}>
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

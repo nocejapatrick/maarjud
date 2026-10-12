@@ -16,6 +16,7 @@ export const colors: FabricColor[] = [
   { name: 'Cocoa', swatch: '#6b5350' },
   { name: 'Cream', swatch: '#e3dccb', pale: true },
   { name: 'Gold', swatch: '#d2b06a' },
+  { name: 'Green', swatch: '#59604a' },
   { name: 'Honey', swatch: '#c8963c' },
   { name: 'Ivory', swatch: '#f4f0e4', pale: true },
   { name: 'Lilac', swatch: '#8d93d6' },
@@ -25,6 +26,8 @@ export const colors: FabricColor[] = [
   { name: 'Pearl', swatch: '#f1ecc9', pale: true },
   { name: 'Pink', swatch: '#f0a8bf' },
   { name: 'Red', swatch: '#e0263c' },
+  { name: 'Silver', swatch: '#a8a09b' },
+  { name: 'Yellow', swatch: '#f2b90f' },
 ];
 
 export function getColor(name: string): FabricColor | undefined {

@@ -16,9 +16,9 @@ export function Footer() {
             <ul className="flex gap-x-[30px] text-[12px]">
               {secondaryNav.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="link">
+                  <Link href={item.href} className="link">
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

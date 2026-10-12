@@ -23,7 +23,9 @@ type Props = {
 
 // Related products / Recently viewed, under the product details.
 export function MoreScrunchies({ related, currentSlug }: Props) {
-  const [selected, setSelected] = useState('related');
+  // with nothing related to show (a collection of one), only "Recently viewed" is offered
+  const shownTabs = related.length > 0 ? tabs : tabs.filter((tab) => tab.id !== 'related');
+  const [selected, setSelected] = useState(shownTabs[0].id);
   const [recent, setRecent] = useState<Product[]>([]);
   const { choice, ready } = useConsent();
   const allowed = choice === 'all';
@@ -55,16 +57,18 @@ export function MoreScrunchies({ related, currentSlug }: Props) {
     <section className="pb-[30px] pt-[47px] lg:pb-[50px] lg:pt-[73px]" aria-label="More scrunchies">
       <TabList
         idPrefix="rel"
-        tabs={tabs}
+        tabs={shownTabs}
         selected={selected}
         onSelect={setSelected}
         label="More scrunchies"
         className="mb-8 flex justify-center gap-4 whitespace-nowrap px-2 min-[360px]:gap-[30px] min-[360px]:px-[var(--outer)]"
         tabClassName="tab uppercase"
       />
-      <div id="rel-panel-related" role="tabpanel" aria-labelledby="rel-tab-related" className="rel-panel" hidden={selected !== 'related'}>
-        <ProductRow products={related} visible={selected === 'related'} />
-      </div>
+      {related.length > 0 && (
+        <div id="rel-panel-related" role="tabpanel" aria-labelledby="rel-tab-related" className="rel-panel" hidden={selected !== 'related'}>
+          <ProductRow products={related} visible={selected === 'related'} />
+        </div>
+      )}
       <div id="rel-panel-recent" role="tabpanel" aria-labelledby="rel-tab-recent" className="rel-panel" hidden={selected !== 'recent'}>
         <ProductRow products={recent} visible={selected === 'recent'} />
         {recent.length === 0 && (

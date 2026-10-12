@@ -1,10 +1,5 @@
+import { Ring } from '@/components/Ring';
 import type { Collection } from '@/lib/products';
-
-// the brand motif: a ring of overlapping circles (the scrunchie silhouette)
-const ring = Array.from({ length: 12 }, (_, i) => {
-  const angle = (2 * Math.PI * i) / 12;
-  return { cx: (20 + 12.5 * Math.cos(angle)).toFixed(2), cy: (20 + 12.5 * Math.sin(angle)).toFixed(2) };
-});
 
 // "How we create ...", under the product grid. The words come from the collection (lib/products.ts).
 export function ProcessSection({ process }: { process: Collection['process'] }) {
@@ -12,11 +7,7 @@ export function ProcessSection({ process }: { process: Collection['process'] }) 
     <section className="bg-surface-raised" aria-labelledby="process-title">
       <div className="px-[46px] pb-6 pt-12 lg:mx-auto lg:grid lg:max-w-[800px] lg:grid-cols-2 lg:items-end lg:px-0 lg:pb-12 lg:pt-[72px]">
         <div>
-          <svg className="h-10 w-10 text-gold" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1" aria-hidden="true">
-            {ring.map((circle) => (
-              <circle key={`${circle.cx}-${circle.cy}`} cx={circle.cx} cy={circle.cy} r="6.5" />
-            ))}
-          </svg>
+          <Ring className="h-10 w-10 text-gold" />
           <h2 id="process-title" className="mt-4 font-serif text-[26px] italic leading-none lg:text-[30px]">
             {process.title}
           </h2>

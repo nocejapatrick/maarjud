@@ -12,3 +12,6 @@ temporary screenshots/
 
 # original photos waiting for scripts/prepare_photos.py (large, and they carry location data)
 new-photos/
+
+# images made for social media posts (not part of the site)
+social-posts/

@@ -545,7 +545,7 @@ a.btn-quiet:active { transform: scale(0.98); }
 .consent { animation: rise-in 0.5s var(--ease); }
 
 /* buttons for velvet grounds: a solid pearl one and an outlined one */
-button.btn-light, button.btn-light-quiet {
+button.btn-light, button.btn-light-quiet, a.btn-light {
   /* 44px tall: easy to tap */
   padding: 12px 16px;
   border: 1px solid var(--surface);
@@ -556,11 +556,12 @@ button.btn-light, button.btn-light-quiet {
   text-transform: uppercase;
   transition: transform 0.3s var(--spring), opacity 0.2s ease-out;
 }
-button.btn-light { background: var(--surface); color: var(--ink); }
-button.btn-light:hover { opacity: 0.86; }
+button.btn-light, a.btn-light { background: var(--surface); color: var(--ink); }
+button.btn-light:hover, a.btn-light:hover { opacity: 0.86; }
+a.btn-light { display: inline-block; }
 button.btn-light-quiet { background: transparent; color: var(--surface); }
 button.btn-light-quiet:hover { border-color: var(--blush); color: var(--blush); }
-button.btn-light:active, button.btn-light-quiet:active { transform: scale(0.98); }
+button.btn-light:active, button.btn-light-quiet:active, a.btn-light:active { transform: scale(0.98); }
 
 /* plain text pages */
 .prose-page h2 { margin-top: 40px; font-size: 16px; font-weight: 400; line-height: 22px; }
