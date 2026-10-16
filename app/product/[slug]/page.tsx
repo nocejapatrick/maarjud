@@ -7,7 +7,7 @@ import { MoreScrunchies } from '@/components/product/MoreScrunchies';
 import { ProductActions } from '@/components/product/ProductActions';
 import { ProductTabs } from '@/components/product/ProductTabs';
 import { getColor } from '@/lib/colors';
-import { colorSiblings, formatPrice, getCollection, getProduct, products, relatedTo } from '@/lib/products';
+import { colorSiblings, getCollection, getProduct, priceLabel, products, relatedTo } from '@/lib/products';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return { title: 'Not found' };
   return {
     title: product.name,
-    description: `${product.name}, ${formatPrice(product.price)}. Handmade by Maarjud.`,
+    description: `${product.name}, ${priceLabel(product)}. Handmade by Maarjud.`,
     openGraph: { title: `${product.name} | Maarjud`, images: [product.image] },
   };
 }
@@ -48,7 +48,7 @@ export default async function ProductPage({ params }: Props) {
                 </h1>
                 <div className="mb-4 flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between lg:gap-5">
                   <p id="p-price" className="py-1 text-[14px] leading-[19.25px] lg:text-[16px] lg:leading-[22px]">
-                    {formatPrice(product.price)}
+                    {priceLabel(product)}
                   </p>
                   <p className="text-[13px] leading-[18.2px]">Placeholder note for this product</p>
                 </div>

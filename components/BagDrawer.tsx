@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useBag, type BagLine } from '@/components/BagProvider';
 import { ProductImage } from '@/components/ProductImage';
-import { formatPrice } from '@/lib/products';
+import { formatPrice, unitOf } from '@/lib/products';
 import { site } from '@/lib/site';
 
 // The message a customer sends to place an order. Plain text, so it pastes cleanly into Instagram.
@@ -12,11 +12,18 @@ function orderMessage(lines: BagLine[], total: number): string {
   return [
     `Hi ${site.name}! I'd like to order:`,
     '',
-    ...lines.map((line) => `${line.quantity} x ${line.product.name} (${formatPrice(line.quantity * line.product.price)})`),
+    ...lines.map((line) => `${countLabel(line)} x ${line.product.name} (${formatPrice(line.quantity * line.product.price)})`),
     '',
     `Subtotal: ${formatPrice(total)}`,
     "I'll pay through GCash.",
   ].join('\n');
+}
+
+// "2" for single pieces, "2 pairs" for things sold in pairs, so the shop knows exactly how many clips to pack
+function countLabel({ product, quantity }: BagLine): string {
+  const unit = unitOf(product);
+  if (!unit) return `${quantity}`;
+  return `${quantity} ${quantity === 1 ? unit : `${unit}s`}`;
 }
 
 // The bag: a drawer from the right. There is no online checkout: the customer copies an order message
@@ -98,7 +105,9 @@ export function BagDrawer() {
                       </Link>
                       <p className="shrink-0 text-[14px] leading-[18px]">{formatPrice(quantity * product.price)}</p>
                     </div>
-                    <p className="mt-1 text-[13px] leading-[16px] text-ink-muted">{formatPrice(product.price)} each</p>
+                    <p className="mt-1 text-[13px] leading-[16px] text-ink-muted">
+                      {formatPrice(product.price)} {unitOf(product) ? `per ${unitOf(product)}` : 'each'}
+                    </p>
                     <div className="mt-auto flex items-center justify-between pt-3">
                       <div className="qty" role="group" aria-label={`Quantity of ${product.name}`}>
                         <button type="button" aria-label="One less" onClick={() => bag.setQuantity(product.slug, quantity - 1)}>

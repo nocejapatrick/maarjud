@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useBag } from '@/components/BagProvider';
-import { formatPrice, type Product } from '@/lib/products';
+import { priceLabel, type Product } from '@/lib/products';
 
 // Buy bar (wide screens): slides up once the main Add to bag button has scrolled out of view.
 export function BuyBar({ product }: { product: Product }) {
@@ -27,7 +27,7 @@ export function BuyBar({ product }: { product: Product }) {
         <span className="px-[10px]" aria-hidden="true">
           &bull;
         </span>
-        <span className="text-[16px] leading-[25px]">{formatPrice(product.price)}</span>
+        <span className="text-[16px] leading-[25px]">{priceLabel(product)}</span>
       </p>
       <button
         type="button"

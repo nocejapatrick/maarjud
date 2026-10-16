@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ProductImage } from '@/components/ProductImage';
-import { formatPrice, type Product } from '@/lib/products';
+import { priceLabel, type Product } from '@/lib/products';
 
 type Props = {
   product: Product;
@@ -21,7 +21,7 @@ export function ProductCard({ product, sizes, eager = false, first = false }: Pr
       </span>
       <span className="caption">
         <span className="caption-name">{product.name}</span>
-        <span className="caption-price">{formatPrice(product.price)}</span>
+        <span className="caption-price">{priceLabel(product)}</span>
       </span>
     </Link>
   );

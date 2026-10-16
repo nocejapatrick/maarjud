@@ -7,9 +7,13 @@
 // stock photo (pexel-hair-clips.jpg), with a lace doily that was drawn for it. It is a composite, not a single photograph.
 // rose-hair-clip-on-lace.jpg is the shop's own rose clip (a cut-out the shop owner supplied) placed on that same
 // tabletop and drawn doily.
-// sunflower-hair-clip-on-lace.jpg is the shop's own sunflower clip (front and back), cut out of a photo on white and
+// pastel-blue-flower-hair-clip-on-lace.jpg is the shop's own blue flower clip (front and back, a cut-out the shop owner
+// supplied) placed on that same tabletop and drawn doily.
+// red-flower-hair-clip-on-lace.jpg is the shop's own red flower clip (front and back, a cut-out the shop owner supplied)
 // placed on that same tabletop and drawn doily.
-// Prices are still placeholders.
+// golden-sunflower-hair-clip-on-lace.jpg is the shop's own golden sunflower clip (front and back, a cut-out the shop owner
+// supplied) placed on that same tabletop and drawn doily.
+// Hair clips are sold in pairs at ₱89 a pair (set by the shop owner). Scrunchie prices are still placeholders.
 
 export type Collection = {
   slug: 'scrunchies' | 'hair-clips';
@@ -19,6 +23,8 @@ export type Collection = {
   /** one of these, in running text: "this scrunchie", "this hair clip" */
   noun: string;
   intro: string;
+  /** what one price buys, when it is more than one piece: shown as "₱89.00 PHP per pair", and the bag counts in it */
+  unit?: string;
   /** the "How we create ..." section under the grid: a title, one line, and four steps */
   process: { title: string; intro: string; steps: { title: string; text: string }[] };
 };
@@ -48,6 +54,7 @@ export const collections: Collection[] = [
     path: '/hair-clips',
     title: 'Hair Clips',
     noun: 'hair clip',
+    unit: 'pair',
     intro:
       'Placeholder copy for this collection. Say what the clips are made from, how they hold in the hair and why they are worth it, in three or four short lines about this long, give or take a word. Swap it for yours.',
     // placeholder steps: swap in the real process
@@ -90,9 +97,11 @@ export const products: Product[] = [
   { collection: 'scrunchies', slug: 'silver-satin-scrunchie-with-green-bow', name: 'Silver satin scrunchie with green bow', price: 220, color: 'Silver', rank: 15, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie-with-green-bow.jpg' },
 
   // Hair clips
-  { collection: 'hair-clips', slug: 'sunflower-hair-clip', name: 'Sunflower hair clip', price: 150, color: 'Yellow', rank: 12, date: '2026-10-11', inStock: true, image: '/images/sunflower-hair-clip-on-lace.jpg' },
-  { collection: 'hair-clips', slug: 'rose-hair-clip', name: 'Rose hair clip', price: 120, color: 'Red', rank: 11, date: '2026-10-11', inStock: true, image: '/images/rose-hair-clip-on-lace.jpg' },
-  { collection: 'hair-clips', slug: 'tulip-crochet-hair-clip', name: 'Tulip crochet hair clip', price: 150, color: 'Green', rank: 10, date: '2026-10-11', inStock: true, image: '/images/tulip-hair-clip-on-lace.jpg' },
+  { collection: 'hair-clips', slug: 'golden-sunflower-hair-clip', name: 'Golden sunflower hair clip', price: 89, color: 'Yellow', rank: 15, date: '2026-10-14', inStock: true, image: '/images/golden-sunflower-hair-clip-on-lace.jpg' },
+  { collection: 'hair-clips', slug: 'red-flower-hair-clip', name: 'Red flower hair clip', price: 89, color: 'Red', rank: 14, date: '2026-10-14', inStock: true, image: '/images/red-flower-hair-clip-on-lace.jpg' },
+  { collection: 'hair-clips', slug: 'pastel-blue-flower-hair-clip', name: 'Pastel blue flower hair clip', price: 89, color: 'Blue', rank: 13, date: '2026-10-14', inStock: true, image: '/images/pastel-blue-flower-hair-clip-on-lace.jpg' },
+  { collection: 'hair-clips', slug: 'rose-hair-clip', name: 'Rose hair clip', price: 89, color: 'Red', rank: 11, date: '2026-10-11', inStock: true, image: '/images/rose-hair-clip-on-lace.jpg' },
+  { collection: 'hair-clips', slug: 'tulip-crochet-hair-clip', name: 'Tulip crochet hair clip', price: 89, color: 'Green', rank: 10, date: '2026-10-11', inStock: true, image: '/images/tulip-hair-clip-on-lace.jpg' },
 ];
 
 const bySlug = new Map(products.map((product) => [product.slug, product]));
@@ -104,6 +113,17 @@ export function getProduct(slug: string): Product | undefined {
 /** ₱180.00 PHP */
 export function formatPrice(pesos: number): string {
   return `₱${pesos.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PHP`;
+}
+
+/** what one price buys, if the product is sold as a set (hair clips come in pairs) */
+export function unitOf(product: Product): string | undefined {
+  return getCollection(product.collection).unit;
+}
+
+/** ₱89.00 PHP per pair, or just ₱180.00 PHP for something sold singly */
+export function priceLabel(product: Product): string {
+  const unit = unitOf(product);
+  return unit ? `${formatPrice(product.price)} per ${unit}` : formatPrice(product.price);
 }
 
 export function getCollection(slug: Collection['slug']): Collection {
