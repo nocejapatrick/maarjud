@@ -1,6 +1,7 @@
 'use client';
 
 import { useBag } from '@/components/BagProvider';
+import { channelNames } from '@/lib/site';
 
 // Add to bag / Buy it now, with the note on how ordering works.
 export function ProductActions({ slug }: { slug: string }) {
@@ -33,7 +34,7 @@ export function ProductActions({ slug }: { slug: string }) {
         </button>
         <p className="mt-3 text-[12px] leading-[14px] lg:mt-[14px] lg:text-[14px] lg:leading-[16.5px]">
           We take orders by message, not online checkout. Add what you like to your bag, send us the order on
-          Instagram, and we will confirm it and reply with GCash payment details.
+          {` ${channelNames}`}, and we will confirm it and reply with GCash payment details.
         </p>
       </div>
     </div>

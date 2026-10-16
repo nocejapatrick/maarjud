@@ -22,7 +22,11 @@ export type Collection = {
   title: string;
   /** one of these, in running text: "this scrunchie", "this hair clip" */
   noun: string;
+  /** the paragraph beside the title at the top of the collection page: what the pieces are, in the words people search with */
   intro: string;
+  /** the browser tab and search result title (about 60 characters at most), and the search result summary (about 155) */
+  metaTitle: string;
+  metaDescription: string;
   /** what one price buys, when it is more than one piece: shown as "₱89.00 PHP per pair", and the bag counts in it */
   unit?: string;
   /** the "How we create ..." section under the grid: a title, one line, and four steps */
@@ -36,7 +40,10 @@ export const collections: Collection[] = [
     title: 'Scrunchies',
     noun: 'scrunchie',
     intro:
-      'Placeholder copy for this collection. Say what the pieces are made from, how they sit in the hair and why they are worth it, in three or four short lines about this long, give or take a word. Swap it for yours.',
+      "Handmade satin scrunchies from the Philippines, gathered full and finished by hand. Satin glides over your hair instead of snagging it, so it is gentler on your ponytail. Bagay sa'yo, promise.",
+    metaTitle: 'Handmade Satin Scrunchies in the Philippines | Maarjud',
+    metaDescription:
+      'Handmade satin scrunchies from Maarjud, made in the Philippines: full, soft and gentle on your hair. Order on Messenger and pay with GCash.',
     // placeholder steps: swap in the real process
     process: {
       title: 'How we create scrunchies',
@@ -56,7 +63,10 @@ export const collections: Collection[] = [
     noun: 'hair clip',
     unit: 'pair',
     intro:
-      'Placeholder copy for this collection. Say what the clips are made from, how they hold in the hair and why they are worth it, in three or four short lines about this long, give or take a word. Swap it for yours.',
+      'Handmade hair clips, crocheted stitch by stitch into sunflowers, tulips and little blooms, plus a satin ribbon rose. Sold in pairs at ₱89 a pair: one for each side, or one for your bestie.',
+    metaTitle: 'Handmade Crochet Hair Clips, ₱89 a Pair | Maarjud',
+    metaDescription:
+      'Handmade crochet hair clips from the Philippines: sunflowers, tulips, blooms and a satin ribbon rose, ₱89 a pair. Order on Messenger, pay with GCash.',
     // placeholder steps: swap in the real process
     process: {
       title: 'How we create hair clips',
@@ -124,6 +134,17 @@ export function unitOf(product: Product): string | undefined {
 export function priceLabel(product: Product): string {
   const unit = unitOf(product);
   return unit ? `${formatPrice(product.price)} per ${unit}` : formatPrice(product.price);
+}
+
+/** a collection page's title, search summary, preferred address and link preview */
+export function collectionMetadata(slug: Collection['slug']) {
+  const { metaTitle, metaDescription, path } = getCollection(slug);
+  return {
+    title: { absolute: metaTitle },
+    description: metaDescription,
+    alternates: { canonical: path },
+    openGraph: { title: metaTitle, description: metaDescription, url: path, siteName: 'Maarjud', locale: 'en_PH', type: 'website' as const },
+  };
 }
 
 export function getCollection(slug: Collection['slug']): Collection {

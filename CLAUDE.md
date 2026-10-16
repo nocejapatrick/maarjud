@@ -3,6 +3,16 @@
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
 
+## SEO (always a priority)
+Every change is checked for its effect on search, in the same pass as the design. In particular:
+- **Every page has its own title and description** in its `metadata`: the title 60 characters at most, ending in `| Maarjud` (the layout's template adds it; the home page writes it out with `absolute`), and the description 155 characters at most. Collection pages take theirs from `metaTitle` and `metaDescription` in `lib/products.ts` through `collectionMetadata()`.
+- **Write in the words customers search with**: what the piece is, what it is made of and where (for example "handmade satin scrunchies", "crochet hair clips", "Philippines"), in plain sentences, never stuffed keyword lists. Product names say what the product is ("Rose hair clip", not just "Rose").
+- **One `h1` per page**, then headings in order. The product name is the product page's `h1`, the collection title the collection page's.
+- **Photos that carry information get descriptive alt text** (the main product photo uses the product name); decorative photos, and tile photos whose name is printed right below them, keep `alt=""`.
+- **Addresses come from `metadataBase`** in `app/layout.tsx` (the live Vercel address, or `NEXT_PUBLIC_SITE_URL`): never write `localhost` or a full URL into a page, so canonical links and link previews point at the live site.
+- **Speed is part of SEO**: keep to the `ProductImage` rules under Output Defaults, so the phone speed score stays high.
+- After a change that touches a page, check its rendered `<title>`, description and canonical link (view the page source), alongside the screenshot.
+
 ## Project Structure (Next.js)
 This is a Next.js 16 site (App Router, TypeScript, Tailwind CSS 3). It was a single `index.html` until October 2026; that version is kept in `legacy-static/` for reference only.
 - `app/` — pages. `app/page.tsx` is the Scrunchies collection (the home page), `app/hair-clips/page.tsx` is the Hair Clips collection, `app/product/[slug]/page.tsx` is the product page (`/product/name-of-product`), `app/connect/page.tsx` is the Connect With Us page (`/connect`), `app/layout.tsx` wraps every page (announcement bar, header, footer, offer tab, bag).
@@ -14,10 +24,10 @@ This is a Next.js 16 site (App Router, TypeScript, Tailwind CSS 3). It was a sin
 - Next.js 16 has breaking changes from earlier versions. Before using an API you are not sure of, read the matching guide in `node_modules/next/dist/docs/`.
 
 ## Ordering
-- There is no online checkout. Customers add scrunchies to the bag, copy the order message the bag writes for them, and send it on Instagram. Payment is arranged through GCash.
+- There is no online checkout. Customers add pieces to the bag and send the order message the bag writes for them on Instagram or Messenger. Payment is arranged through GCash.
 - Hair clips are sold in pairs, ₱89 a pair. The Hair Clips collection has `unit: 'pair'` in `lib/products.ts`, so its prices read "per pair" everywhere (use `priceLabel(product)`, not `formatPrice`, wherever a product's price is shown) and the bag and order message count pairs.
 - The bag is saved in the customer's browser only (`components/BagProvider.tsx`, `components/BagDrawer.tsx`).
-- The shop's Instagram username goes in `lib/site.ts`. While it is empty, the bag shows no "Open Instagram" button.
+- The shop's Instagram username and Facebook Page (`messenger`: its username, or the number in its `profile.php?id=` address) go in `lib/site.ts`. Each app gets an "Open ..." button in the bag and on the Connect With Us page only while its setting is filled in; `messageChannels` and `channelNames` in `lib/site.ts` list what is set up, so use them rather than writing "Instagram" into copy. The Messenger link (`m.me`) opens with the order already typed in where Messenger allows it; every "Open" button also copies the order so it can be pasted.
 
 ## Privacy notice
 - A notice (`components/ConsentBanner.tsx`) asks each new visitor to choose **Accept** or **Only my bag**. The choice is kept by `components/ConsentProvider.tsx`.

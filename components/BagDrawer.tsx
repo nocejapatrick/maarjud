@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useBag, type BagLine } from '@/components/BagProvider';
 import { ProductImage } from '@/components/ProductImage';
 import { formatPrice, unitOf } from '@/lib/products';
-import { site } from '@/lib/site';
+import { channelLink, channelNames, messageChannels, site } from '@/lib/site';
 
-// The message a customer sends to place an order. Plain text, so it pastes cleanly into Instagram.
+// The message a customer sends to place an order. Plain text, so it pastes cleanly into Instagram or Messenger.
 function orderMessage(lines: BagLine[], total: number): string {
   return [
     `Hi ${site.name}! I'd like to order:`,
@@ -26,8 +26,8 @@ function countLabel({ product, quantity }: BagLine): string {
   return `${quantity} ${quantity === 1 ? unit : `${unit}s`}`;
 }
 
-// The bag: a drawer from the right. There is no online checkout: the customer copies an order message
-// and sends it on Instagram, and payment is arranged through GCash.
+// The bag: a drawer from the right. There is no online checkout: the customer sends the order message the bag writes
+// on Instagram or Messenger (lib/site.ts says which are set up), and payment is arranged through GCash.
 export function BagDrawer() {
   const bag = useBag();
   const dialog = useRef<HTMLDialogElement>(null);
@@ -140,8 +140,8 @@ export function BagDrawer() {
             <div className="mt-6 border-t border-line pt-6">
               <h3 className="text-[14px] font-normal">How to order</h3>
               <p className="mt-2 text-[13px] leading-[18px]">
-                Copy your order and send it to us on Instagram{site.instagram ? ` (@${site.instagram})` : ''}. We&apos;ll
-                confirm it and reply with GCash payment details.
+                Copy your order and send it to us on {channelNames}
+                {site.instagram ? ` (@${site.instagram})` : ''}. We&apos;ll confirm it and reply with GCash payment details.
               </p>
               <textarea
                 ref={messageBox}
@@ -155,11 +155,19 @@ export function BagDrawer() {
               <button type="button" className="btn-primary mt-3" onClick={copy}>
                 {copied ? 'Copied' : 'Copy order message'}
               </button>
-              {site.instagram && (
-                <a href={`https://ig.me/m/${site.instagram}`} className="btn-quiet mt-[10px]" target="_blank" rel="noopener noreferrer">
-                  Open Instagram
+              {/* opening a chat also copies the order, so it is ready to paste wherever it is not typed in already */}
+              {messageChannels.map((channel) => (
+                <a
+                  key={channel.name}
+                  href={channelLink(channel, message)}
+                  className="btn-quiet mt-[10px]"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={copy}
+                >
+                  Open {channel.name}
                 </a>
-              )}
+              ))}
               <p className="sr-only" role="status" aria-live="polite">
                 {copied ? 'Order message copied.' : ''}
               </p>

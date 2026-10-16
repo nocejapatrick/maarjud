@@ -20,11 +20,18 @@ const baskervville = Baskervville({ subsets: ['latin'], weight: '400', style: 'i
 // the text around it, so the page uses the bare font name and lets ₱ fall through to the system font instead.
 const bodyFont = rubik.style.fontFamily.split(',')[0];
 
+function siteUrl(): string {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  return 'http://localhost:3000';
+}
+
 export const metadata: Metadata = {
-  // TODO: set NEXT_PUBLIC_SITE_URL to the live address when the site is hosted (used for link previews)
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
-  title: { default: 'Scrunchies | Maarjud', template: '%s | Maarjud' },
-  description: 'Placeholder description for the scrunchies collection page.',
+  // The site's own address, for search engines and link previews. Vercel supplies its production address while it
+  // builds the site; NEXT_PUBLIC_SITE_URL overrides it (for example once a custom domain is added).
+  metadataBase: new URL(siteUrl()),
+  title: { default: 'Handmade Scrunchies and Hair Clips | Maarjud', template: '%s | Maarjud' },
+  description: 'Handmade satin scrunchies and crochet hair clips from the Philippines. Order on Messenger and pay with GCash.',
   icons: {
     icon: [
       { url: '/brand_assets/maarjud-icon.svg', type: 'image/svg+xml' },

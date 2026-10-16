@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { PrivacyChoice } from '@/components/PrivacyChoice';
+import { channelNames } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Privacy',
@@ -31,7 +32,7 @@ export default function PrivacyPage() {
 
       <h2>When you order</h2>
       <p>
-        You send us your order by message on Instagram and pay through GCash. We see what you send us there, such as
+        You send us your order by message on {channelNames} and pay through GCash. We see what you send us there, such as
         your name, your order and where to deliver it, and we use it to confirm, pack and deliver your order.
       </p>
       <p>Placeholder: say how long you keep order messages and who else sees the details, for example the courier.</p>
