@@ -4,13 +4,12 @@ export const site = {
   name: 'Maarjud',
 
   // Orders are sent by message and paid through GCash.
-  // TODO: put the shop's Instagram username here (without the @), for example 'maarjud.ph'.
-  // While it is empty the bag shows the order message to copy, but no "Open Instagram" button.
-  instagram: '',
+  // The shop's Instagram username, without the @ (instagram.com/maarjud). Leave it empty to hide every Instagram button.
+  instagram: 'maarjud',
 
-  // The shop's Facebook Page (facebook.com/maarjud), for orders on Messenger: its username, or the number in its
-  // profile.php?id= address if it ever has none. Customers reach it at m.me/<this>.
-  messenger: 'maarjud',
+  // A Facebook Page for orders on Messenger: its username, or the number in its profile.php?id= address. Empty since the
+  // shop's Page was removed (October 2026), which hides every Messenger button; fill it in to bring them back.
+  messenger: '',
 
   // TODO: the shop's email address, if it has one. While it is empty the Connect With Us page shows no email.
   email: '',
@@ -43,7 +42,7 @@ export const mainNav = [
 
 export const secondaryNav = [
   { label: 'Journal', href: '#' },
-  { label: 'Instagram', href: '#' },
+  { label: 'Instagram', href: site.instagram ? `https://www.instagram.com/${site.instagram}/` : '#' },
   { label: 'Contact', href: '/connect' },
 ];
 

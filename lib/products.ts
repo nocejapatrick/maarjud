@@ -15,6 +15,8 @@
 // supplied) placed on that same tabletop and drawn doily.
 // Hair clips are sold in pairs at ₱89 a pair (set by the shop owner). Scrunchie prices are still placeholders.
 
+import { channelNames } from '@/lib/site';
+
 export type Collection = {
   slug: 'scrunchies' | 'hair-clips';
   /** address of the collection page */
@@ -43,7 +45,7 @@ export const collections: Collection[] = [
       "Handmade satin scrunchies from the Philippines, gathered full and finished by hand. Satin glides over your hair instead of snagging it, so it is gentler on your ponytail. Bagay sa'yo, promise.",
     metaTitle: 'Handmade Satin Scrunchies in the Philippines | Maarjud',
     metaDescription:
-      'Handmade satin scrunchies from Maarjud, made in the Philippines: full, soft and gentle on your hair. Order on Messenger and pay with GCash.',
+      `Handmade satin scrunchies from Maarjud, made in the Philippines: full, soft and gentle on your hair. Order on ${channelNames}, pay with GCash.`,
     // placeholder steps: swap in the real process
     process: {
       title: 'How we create scrunchies',
@@ -66,7 +68,7 @@ export const collections: Collection[] = [
       'Handmade hair clips, crocheted stitch by stitch into sunflowers, tulips and little blooms, plus a satin ribbon rose. Sold in pairs at ₱89 a pair: one for each side, or one for your bestie.',
     metaTitle: 'Handmade Crochet Hair Clips, ₱89 a Pair | Maarjud',
     metaDescription:
-      'Handmade crochet hair clips from the Philippines: sunflowers, tulips, blooms and a satin ribbon rose, ₱89 a pair. Order on Messenger, pay with GCash.',
+      `Handmade crochet hair clips from the Philippines: sunflowers, tulips, blooms and a ribbon rose, ₱89 a pair. Order on ${channelNames}, pay with GCash.`,
     // placeholder steps: swap in the real process
     process: {
       title: 'How we create hair clips',

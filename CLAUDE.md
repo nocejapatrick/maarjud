@@ -24,7 +24,7 @@ This is a Next.js 16 site (App Router, TypeScript, Tailwind CSS 3). It was a sin
 - Next.js 16 has breaking changes from earlier versions. Before using an API you are not sure of, read the matching guide in `node_modules/next/dist/docs/`.
 
 ## Ordering
-- There is no online checkout. Customers add pieces to the bag and send the order message the bag writes for them on Instagram or Messenger. Payment is arranged through GCash.
+- There is no online checkout. Customers add pieces to the bag and send the order message the bag writes for them on Instagram (@maarjud). Payment is arranged through GCash. Messenger is supported too but switched off (`messenger` is empty in `lib/site.ts`) since the shop's Facebook Page was removed.
 - Hair clips are sold in pairs, ₱89 a pair. The Hair Clips collection has `unit: 'pair'` in `lib/products.ts`, so its prices read "per pair" everywhere (use `priceLabel(product)`, not `formatPrice`, wherever a product's price is shown) and the bag and order message count pairs.
 - The bag is saved in the customer's browser only (`components/BagProvider.tsx`, `components/BagDrawer.tsx`).
 - The shop's Instagram username and Facebook Page (`messenger`: its username, or the number in its `profile.php?id=` address) go in `lib/site.ts`. Each app gets an "Open ..." button in the bag and on the Connect With Us page only while its setting is filled in; `messageChannels` and `channelNames` in `lib/site.ts` list what is set up, so use them rather than writing "Instagram" into copy. The Messenger link (`m.me`) opens with the order already typed in where Messenger allows it; every "Open" button also copies the order so it can be pasted.

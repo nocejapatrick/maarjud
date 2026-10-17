@@ -8,6 +8,7 @@ import { ConsentBanner } from '@/components/ConsentBanner';
 import { ConsentProvider } from '@/components/ConsentProvider';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { channelNames } from '@/lib/site';
 import './globals.css';
 
 // Rubik (basic Latin, weights 300 to 400 in one file; from Google Fonts, SIL Open Font License).
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
   // builds the site; NEXT_PUBLIC_SITE_URL overrides it (for example once a custom domain is added).
   metadataBase: new URL(siteUrl()),
   title: { default: 'Handmade Scrunchies and Hair Clips | Maarjud', template: '%s | Maarjud' },
-  description: 'Handmade satin scrunchies and crochet hair clips from the Philippines. Order on Messenger and pay with GCash.',
+  description: `Handmade satin scrunchies and crochet hair clips from the Philippines. Order on ${channelNames} and pay with GCash.`,
   icons: {
     icon: [
       { url: '/brand_assets/maarjud-icon.svg', type: 'image/svg+xml' },
