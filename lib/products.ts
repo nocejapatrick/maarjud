@@ -13,6 +13,10 @@
 // placed on that same tabletop and drawn doily.
 // golden-sunflower-hair-clip-on-lace.jpg is the shop's own golden sunflower clip (front and back, a cut-out the shop owner
 // supplied) placed on that same tabletop and drawn doily.
+// golden-crochet-flower-hair-clip-on-lace.jpg and red-crochet-bow-hair-clip-on-lace.jpg are the shop's own clips (front
+// and back, cut-outs the shop owner supplied) placed on that same tabletop and drawn doily.
+// pink-satin-scrunchie-with-tulip-ribbon.jpg is the shop's own scrunchie, cut out of a photo on linen and placed on the
+// same plain studio backdrop as the silver scrunchies.
 // Hair clips are sold in pairs at ₱89 a pair (set by the shop owner). Scrunchies are ₱50 plain and ₱65 with a ribbon (set by the shop owner).
 
 import { channelNames } from '@/lib/site';
@@ -65,10 +69,10 @@ export const collections: Collection[] = [
     noun: 'hair clip',
     unit: 'pair',
     intro:
-      'Handmade hair clips, crocheted stitch by stitch into sunflowers, tulips and little blooms, plus a satin ribbon rose. Sold in pairs at ₱89 a pair: one for each side, or one for your bestie.',
+      'Handmade hair clips, crocheted stitch by stitch into sunflowers, tulips, bows and little blooms, plus a satin ribbon rose. Sold in pairs at ₱89 a pair: one for each side, or one for your bestie.',
     metaTitle: 'Handmade Crochet Hair Clips, ₱89 a Pair | Maarjud',
     metaDescription:
-      `Handmade crochet hair clips from the Philippines: sunflowers, tulips, blooms and a ribbon rose, ₱89 a pair. Order on ${channelNames}, pay with GCash.`,
+      `Handmade crochet hair clips from the Philippines: sunflowers, tulips, bows, blooms and a ribbon rose, ₱89 a pair. Order on ${channelNames}, pay with GCash.`,
     // placeholder steps: swap in the real process
     process: {
       title: 'How we create hair clips',
@@ -105,10 +109,13 @@ export type Product = {
 };
 
 export const products: Product[] = [
+  { collection: 'scrunchies', slug: 'pink-satin-scrunchie-with-tulip-ribbon', family: 'tulip-ribbon', name: 'Pink satin scrunchie with tulip ribbon', price: 65, color: 'Pink', rank: 17, date: '2026-10-25', inStock: true, image: '/images/pink-satin-scrunchie-with-tulip-ribbon.jpg' },
   { collection: 'scrunchies', slug: 'silver-satin-scrunchie', name: 'Silver satin scrunchie', price: 50, color: 'Silver', rank: 16, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie.jpg' },
-  { collection: 'scrunchies', slug: 'silver-satin-scrunchie-with-green-bow', name: 'Silver satin scrunchie with green bow', price: 65, color: 'Silver', rank: 15, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie-with-green-bow.jpg' },
+  { collection: 'scrunchies', slug: 'silver-satin-scrunchie-with-green-bow', family: 'tulip-ribbon', name: 'Silver satin scrunchie with green bow', price: 65, color: 'Silver', rank: 15, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie-with-green-bow.jpg' },
 
   // Hair clips
+  { collection: 'hair-clips', slug: 'golden-crochet-flower-hair-clip', name: 'Golden crochet flower hair clip', price: 89, color: 'Yellow', rank: 17, date: '2026-10-25', inStock: true, image: '/images/golden-crochet-flower-hair-clip-on-lace.jpg' },
+  { collection: 'hair-clips', slug: 'red-crochet-bow-hair-clip', name: 'Red crochet bow hair clip', price: 89, color: 'Red', rank: 16, date: '2026-10-25', inStock: true, image: '/images/red-crochet-bow-hair-clip-on-lace.jpg' },
   { collection: 'hair-clips', slug: 'golden-sunflower-hair-clip', name: 'Golden sunflower hair clip', price: 89, color: 'Yellow', rank: 15, date: '2026-10-14', inStock: true, image: '/images/golden-sunflower-hair-clip-on-lace.jpg' },
   { collection: 'hair-clips', slug: 'red-flower-hair-clip', name: 'Red flower hair clip', price: 89, color: 'Red', rank: 14, date: '2026-10-14', inStock: true, image: '/images/red-flower-hair-clip-on-lace.jpg' },
   { collection: 'hair-clips', slug: 'pastel-blue-flower-hair-clip', name: 'Pastel blue flower hair clip', price: 89, color: 'Blue', rank: 13, date: '2026-10-14', inStock: true, image: '/images/pastel-blue-flower-hair-clip-on-lace.jpg' },
