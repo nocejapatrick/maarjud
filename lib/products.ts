@@ -13,7 +13,7 @@
 // placed on that same tabletop and drawn doily.
 // golden-sunflower-hair-clip-on-lace.jpg is the shop's own golden sunflower clip (front and back, a cut-out the shop owner
 // supplied) placed on that same tabletop and drawn doily.
-// Hair clips are sold in pairs at ₱89 a pair (set by the shop owner). Scrunchie prices are still placeholders.
+// Hair clips are sold in pairs at ₱89 a pair (set by the shop owner). Scrunchies are ₱50 plain and ₱65 with a ribbon (set by the shop owner).
 
 import { channelNames } from '@/lib/site';
 
@@ -105,8 +105,8 @@ export type Product = {
 };
 
 export const products: Product[] = [
-  { collection: 'scrunchies', slug: 'silver-satin-scrunchie', name: 'Silver satin scrunchie', price: 180, color: 'Silver', rank: 16, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie.jpg' },
-  { collection: 'scrunchies', slug: 'silver-satin-scrunchie-with-green-bow', name: 'Silver satin scrunchie with green bow', price: 220, color: 'Silver', rank: 15, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie-with-green-bow.jpg' },
+  { collection: 'scrunchies', slug: 'silver-satin-scrunchie', name: 'Silver satin scrunchie', price: 50, color: 'Silver', rank: 16, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie.jpg' },
+  { collection: 'scrunchies', slug: 'silver-satin-scrunchie-with-green-bow', name: 'Silver satin scrunchie with green bow', price: 65, color: 'Silver', rank: 15, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie-with-green-bow.jpg' },
 
   // Hair clips
   { collection: 'hair-clips', slug: 'golden-sunflower-hair-clip', name: 'Golden sunflower hair clip', price: 89, color: 'Yellow', rank: 15, date: '2026-10-14', inStock: true, image: '/images/golden-sunflower-hair-clip-on-lace.jpg' },
