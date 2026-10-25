@@ -12,9 +12,11 @@ export type FabricColor = {
 export const colors: FabricColor[] = [
   { name: 'Black', swatch: '#1a1a1a' },
   { name: 'Blue', swatch: '#8fb3da' },
+  { name: 'Burgundy', swatch: '#7d1d30' },
   { name: 'Champagne', swatch: '#e6d5b4' },
   { name: 'Cocoa', swatch: '#6b5350' },
   { name: 'Cream', swatch: '#e3dccb', pale: true },
+  { name: 'Emerald', swatch: '#088c5a' },
   { name: 'Gold', swatch: '#d2b06a' },
   { name: 'Green', swatch: '#59604a' },
   { name: 'Honey', swatch: '#c8963c' },

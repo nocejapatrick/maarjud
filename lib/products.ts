@@ -17,6 +17,10 @@
 // and back, cut-outs the shop owner supplied) placed on that same tabletop and drawn doily.
 // pink-satin-scrunchie-with-tulip-ribbon.jpg is the shop's own scrunchie, cut out of a photo on linen and placed on the
 // same plain studio backdrop as the silver scrunchies.
+// emerald-satin-scrunchie-with-lime-tassels.jpg is the shop's own scrunchie, cut out of the shop owner's photo and placed
+// on that same studio backdrop.
+// burgundy-satin-scrunchie-with-green-ribbon-buds.jpg is the shop's own scrunchie (a cut-out the shop owner supplied)
+// placed on that same studio backdrop.
 // Hair clips are sold in pairs at ₱89 a pair (set by the shop owner). Scrunchies are ₱50 plain and ₱65 with a ribbon (set by the shop owner).
 
 import { channelNames } from '@/lib/site';
@@ -109,6 +113,8 @@ export type Product = {
 };
 
 export const products: Product[] = [
+  { collection: 'scrunchies', slug: 'burgundy-satin-scrunchie', family: 'tulip-ribbon', name: 'Burgundy satin scrunchie', price: 65, color: 'Burgundy', rank: 19, date: '2026-10-25', inStock: true, image: '/images/burgundy-satin-scrunchie-with-green-ribbon-buds.jpg' },
+  { collection: 'scrunchies', slug: 'emerald-satin-scrunchie', family: 'tulip-ribbon', name: 'Emerald satin scrunchie', price: 65, color: 'Emerald', rank: 18, date: '2026-10-25', inStock: true, image: '/images/emerald-satin-scrunchie-with-lime-tassels.jpg' },
   { collection: 'scrunchies', slug: 'pink-satin-scrunchie-with-tulip-ribbon', family: 'tulip-ribbon', name: 'Pink satin scrunchie with tulip ribbon', price: 65, color: 'Pink', rank: 17, date: '2026-10-25', inStock: true, image: '/images/pink-satin-scrunchie-with-tulip-ribbon.jpg' },
   { collection: 'scrunchies', slug: 'silver-satin-scrunchie', name: 'Silver satin scrunchie', price: 50, color: 'Silver', rank: 16, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie.jpg' },
   { collection: 'scrunchies', slug: 'silver-satin-scrunchie-with-green-bow', family: 'tulip-ribbon', name: 'Silver satin scrunchie with green bow', price: 65, color: 'Silver', rank: 15, date: '2026-10-11', inStock: true, image: '/images/silver-satin-scrunchie-with-green-bow.jpg' },
